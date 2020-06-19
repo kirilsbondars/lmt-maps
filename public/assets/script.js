@@ -8,13 +8,11 @@
 //     })
 // });
 
-// import PLS1 from '../data/PLS1.kml';
-// import PLS2 from '../data/PLS2.kml';
-// import magistralaOptika from '../data/Maģistrālā optika.kml';
-// import torniPlanoti from '../data/Torņi LMT plānoti pieslēgt.kml';
-// import torniPieslegti from '../data/Torņi planoti pieslegt.kml';
+$(window).on('load', function() {
+    mapShow();
+    updateFilesNames();
+});
 
-window.onload = mapShow;
 let layers = {}, map;
 
 function mapShow() {
@@ -33,7 +31,13 @@ function mapShow() {
     });
 }
 
-$("#choice_layers input:checkbox").click(function() {
+function updateFilesNames() {
+    $.post("./files/get_files_names_checkbox.php", function (data) {
+        $("#choice_layers").html(data);
+    });
+}
+
+$(document).on('click','#choice_layers input:checkbox',function(){
     console.log($(this).val() + " " + $(this).prop("checked"));
 
     if ($(this).prop("checked")) {
