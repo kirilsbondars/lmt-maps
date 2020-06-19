@@ -59,5 +59,26 @@ $(document).on('click','#choice_layers input:checkbox',function(){
 $("#add_layers").submit(function(event) {
     event.preventDefault();
 
-    $.post("./files/upload_file.php", );
+    let fd = new FormData();
+    let files = $('#fileToUpload')[0].files[0]; // file div
+    fd.append('fileToUpload', files); // the name to upload.php
+
+    $.ajax({
+        url: './files/upload_file.php',
+        type: 'post',
+        data: fd,
+        contentType: false,
+        processData: false,
+        success: function(responseJSON){
+            let response = JSON.parse(responseJSON);
+            console.log(response["des"]);
+
+            if(response["success"]) {
+
+                updateFilesNames();
+            } else {
+                $('.alert').alert()
+            }
+        },
+    });
 })

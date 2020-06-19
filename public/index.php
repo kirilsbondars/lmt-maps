@@ -5,18 +5,18 @@
     <title>Vector Layer</title>
     <!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
     <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=fetch,requestAnimationFrame,Element.prototype.classList,URL"></script>
-    <!-- My CSS -->
-    <link rel="stylesheet" href="assets/styles.css">
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <!-- OpenLayers -->
     <link rel="stylesheet" href="assets/ol/ol.css">
+    <!-- My CSS -->
+    <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
 <div class="container-fluid">
     <div id="row" class="row">
         <div id="layers" class="col-md-3">
-            Choose files to display:
+            <h5>Choose files to display:</h5>
             <form id="choice_layers">
             </form>
 
@@ -49,6 +49,12 @@
 <!--                                </tr>-->
 <!--                                </tbody>-->
 <!--                            </table>-->
+                            <div id="successful_upload" class="alert alert-success" role="alert">
+                                File successfully been uploaded.
+                            </div>
+                            <div id="unsuccessful_upload" class="alert alert-warning" role="alert">
+                                File haven't been uploaded.
+                            </div>
                             <form id="add_layers" action="files/upload_file.php" method="post" enctype="multipart/form-data">
                                 Select file to upload:
                                 <input type="file" name="fileToUpload" id="fileToUpload" accept=".geojson, .kml" required>
