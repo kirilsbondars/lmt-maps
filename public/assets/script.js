@@ -55,3 +55,9 @@ $(document).on('click','#choice_layers input:checkbox',function(){
         map.removeLayer(layers[$(this).val()]);
     }
 })
+
+$("#add_layers").submit(function(event) {
+    event.preventDefault();
+
+    $.post("./files/upload_file.php", );
+})

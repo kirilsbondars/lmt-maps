@@ -22,7 +22,7 @@
 
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Manage layers</button>
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Manage layers</h5>
@@ -49,9 +49,9 @@
 <!--                                </tr>-->
 <!--                                </tbody>-->
 <!--                            </table>-->
-                            <form id="add_layers" enctype="multipart/form-data">
+                            <form id="add_layers" action="files/upload_file.php" method="post" enctype="multipart/form-data">
                                 Select file to upload:
-                                <input type="file" name="fileToUpload" id="fileToUpload">
+                                <input type="file" name="fileToUpload" id="fileToUpload" accept=".geojson, .kml" required>
                                 <input type="submit" value="Upload Image" name="submit">
                             </form>
                         </div>
