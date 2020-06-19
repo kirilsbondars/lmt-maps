@@ -19,6 +19,7 @@
             <form id="choice_layers">
                 <?php require_once("get_files_names.php"); ?>
             </form>
+            <button type="button" id="layers" class="btn btn-primary btn-lg btn-block">Manage layers</button>
         </div>
         <div id="map" class="map col-md"></div>
     </div>
