@@ -5,6 +5,14 @@
     padding-left: 0 !important;
 }
 
+#layers {
+
+}
+
+#successful_upload, #unsuccessful_upload {
+    display: none;
+}
+
 @media only screen and (max-width: 768px) {
     #map {
         width: 100%;

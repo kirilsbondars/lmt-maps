@@ -8,9 +8,10 @@
 //     })
 // });
 
+
 $(window).on('load', function() {
     mapShow();
-    updateFilesNames();
+    updateLayersList();
 });
 
 let layers = {}, map;
@@ -31,7 +32,7 @@ function mapShow() {
     });
 }
 
-function updateFilesNames() {
+function updateLayersList() {
     $.post("./files/get_files_names_checkbox.php", function (data) {
         $("#choice_layers").html(data);
     });
@@ -44,7 +45,7 @@ $(document).on('click','#choice_layers input:checkbox',function(){
         if (layers[$(this).val()] === undefined) {
             layers[$(this).val()] = new ol.layer.Vector({
                 source: new ol.source.Vector({
-                    url: './data/' + $(this).val(),
+                    url: './files/get_layer.php?file=' + $(this).val(),
                     format: new ol.format.KML()
                 })
             });
@@ -56,7 +57,7 @@ $(document).on('click','#choice_layers input:checkbox',function(){
     }
 })
 
-$("#add_layers").submit(function(event) {
+$("#addLayerForm").submit(function(event) {
     event.preventDefault();
 
     let fd = new FormData();
@@ -70,15 +71,17 @@ $("#add_layers").submit(function(event) {
         contentType: false,
         processData: false,
         success: function(responseJSON){
-            let response = JSON.parse(responseJSON);
-            console.log(response["des"]);
-
-            if(response["success"]) {
-
-                updateFilesNames();
-            } else {
-                $('.alert').alert()
-            }
+            console.log(responseJSON);
+            // let response = JSON.parse(responseJSON);
+            // console.log(response["des"]);
+            //
+            // $("#successful_upload , #unsuccessful_upload").hide();
+            // if(response["success"]) {
+            //     $("#successful_upload").show();
+            //     updateLayersList();
+            // } else {
+            //     $("#unsuccessful_upload").html(response["des"]).show();
+            // }
         },
     });
 })

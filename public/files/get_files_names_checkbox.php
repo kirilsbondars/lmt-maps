@@ -1,8 +1,7 @@
 <?php
 require_once("../../src/initialize.php");
-require_once(ROOT . "/src/get_files_names.php");
 
-$files_names = get_files_names();
+$files_names = get_files_names(DATA);
 
 foreach ($files_names as $value) {
     echo '<div class="form-check">

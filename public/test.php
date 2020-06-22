@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html>
-<body>
+<?php
+require_once("../src/phayes-geoPHP/geoPHP.inc");
 
-<form action="files/upload_file.php" method="post" enctype="multipart/form-data">
-    Select image to upload:
-    <input type="file" name="fileToUpload" id="fileToUpload">
-    <input type="submit" value="Upload Image" name="submit">
-</form>
+$geo = geoPHP::load(file_get_contents('./data/PLS2.kml'), 'kml');
 
-</body>
-</html>
+$fp = fopen("./PLS1.geojson","w");
+fwrite($fp, $geo->out('geojson'));
+fclose($fp);
