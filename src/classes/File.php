@@ -3,7 +3,21 @@
 
 class File extends DatabaseObject
 {
-    public $temp_file, $target_file, $name, $type, $upload_name;
+    public $temp_file, $target_file, $name, $type;
+
+    public static function initialize_upload($upload_name) {
+        if (!empty($_FILES)) {
+            $file = new File();
+            $file->temp_file = $_FILES[$upload_name]['tmp_name'];
+            $file->target_file = str_replace('\\', '/',DATA . basename($_FILES[$upload_name]["name"]));
+            $file->name = basename($_FILES[$upload_name]["name"]);
+            $file->type = strtolower(pathinfo($file->target_file,PATHINFO_EXTENSION));
+
+            return $file;
+        } else {
+            error("No file to upload");
+        }
+    }
 
     public function check() {
         if (file_exists($this->target_file))
@@ -14,22 +28,15 @@ class File extends DatabaseObject
     }
 
     public function upload() {
-        if (!empty($_FILES)) {
-            $this->temp_file = $_FILES[$this->upload_name]['tmp_name'];
-            $this->target_file = str_replace('\\', '/',DATA . basename($_FILES[$this->upload_name]["name"]));
-            $this->name = basename($_FILES[$this->upload_name]["name"]);
-            $this->type = strtolower(pathinfo($this->target_file,PATHINFO_EXTENSION));
-        } else {
-            error("No file to upload");
-        }
-
-        $this->check();
-
         if (!move_uploaded_file($this->temp_file, $this->target_file))
             error("Sorry, there was an error uploading your file.");
     }
 
-    public function delete() {
-        echo unlink($this->target_file);
+    public static function delete($path) {
+        echo unlink($path);
+    }
+
+    public static function rename($path, $new_path) {
+        echo rename($path, $new_path);
     }
 }

@@ -1,13 +1,13 @@
 <?php
 require_once("../../src/initialize.php");
 
-$file = new File();
-$file->upload_name = "fileToUpload";
+$file = File::initialize_upload("fileToUpload");
+$file->check();
 $file->upload();
 
-$layer = new Layer();
-$layer->name = $file->name;
-$layer->target_file = $file->target_file;
-$layer->style = "bye";
+if($file->type == "kml")
+    $style = "Hello";
+else if ($file->type == "geojson")
+    $style = "Bye";
 
-$layer->add_to_db();
+Layer::add_to_db($file->name, $file->target_file, $style);

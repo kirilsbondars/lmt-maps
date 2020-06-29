@@ -4,14 +4,12 @@ require_once("../../src/initialize.php");
 $id = $_GET["id"];
 $result = array("success" => true);
 
-$layer = new Layer();
-$layer->id = $id;
-$layer->data_from_db();
+$layer = new Layer($id);
 
-$file = new File();
-$file->target_file = $layer->target_file;
-
-if ($file->delete()) {
+if(file_exists($layer->target_file)) {
+    unlink($layer->target_file);
+    $layer->delete_from_db();
+} else {
     $result["success"] = false;
 }
 

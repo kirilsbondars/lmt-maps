@@ -26,6 +26,8 @@ function deleteLayer(layer) {
     })
 }
 
+// Modal content
+
 
 // DropZone settings
 Dropzone.options.fileUpload = {

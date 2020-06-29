@@ -46,8 +46,15 @@ $(document).on('click','#choice_layers input:checkbox',function(){
             layers[$(this).val()] = new ol.layer.Vector({
                 source: new ol.source.Vector({
                     url: './layers/get_layer.php?file=' + $(this).val(),
-                    format: new ol.format.KML()
-                })
+                    format: new ol.format.KML({
+                        extractStyles: false
+                    })
+                }),
+                // style: new ol.style.Style({
+                //     stroke: new ol.style.Stroke({
+                //         color: 'blue'
+                //     })
+                // })
             });
         }
 
