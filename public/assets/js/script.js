@@ -57,31 +57,24 @@ $(document).on('click','#choice_layers input:checkbox',function(){
     }
 })
 
-$("#addLayerForm").submit(function(event) {
-    event.preventDefault();
+// Upload files
+Dropzone.options.fileUpload = {
+    paramName: "fileToUpload",
+    Filesize: 200,
+    acceptedFiles:".kml, .geojson",
+    parallelUploads: 1,
+    dictDefaultMessage: "Drop files(*.KML, *.GEOJSON) here to upload",
+    init: function(){
+        let myDropzone = this;
 
-    let fd = new FormData();
-    let files = $('#fileToUpload')[0].files[0]; // file div
-    fd.append('fileToUpload', files); // the name to upload.php
+        this.on("queuecomplete", function () {
+            alert("Uploading finished");
+            //закрыть окно если нет ошибок
+            //если есть ошибки вывести их alert bootstrap
+        })
 
-    $.ajax({
-        url: './files/upload_file.php',
-        type: 'post',
-        data: fd,
-        contentType: false,
-        processData: false,
-        success: function(responseJSON){
-            console.log(responseJSON);
-            // let response = JSON.parse(responseJSON);
-            // console.log(response["des"]);
-            //
-            // $("#successful_upload , #unsuccessful_upload").hide();
-            // if(response["success"]) {
-            //     $("#successful_upload").show();
-            //     updateLayersList();
-            // } else {
-            //     $("#unsuccessful_upload").html(response["des"]).show();
-            // }
-        },
-    });
-})
+        this.on("success", function (file) {
+            myDropzone.removeFile(file);
+        })
+    },
+};

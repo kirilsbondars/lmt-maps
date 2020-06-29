@@ -24,22 +24,10 @@ class DatabaseObject
             return false;
     }
 
-    /*static public function run_sql($sql) {
+    static public function run_sql($sql) {
         $result = self::$database->query($sql);
         if(!$result) {
             exit("Database query failed.");
         }
-    }*/
-
-    static public function run_sql($sql, $show_result = false) {
-        $result = self::$database->query($sql);
-
-        if(!$result) {
-            return array("ok" => false, "result" => "Database query failed.");
-        }
-        if ($show_result)
-            return array("ok" => true,"result" => $result);
-        else
-            return array("ok" => true);
     }
 }

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/kml.iml" filepath="$PROJECT_DIR$/.idea/kml.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/lmt-maps.iml" filepath="$PROJECT_DIR$/.idea/lmt-maps.iml" />
     </modules>
   </component>
 </project>

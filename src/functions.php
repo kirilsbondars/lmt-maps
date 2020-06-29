@@ -14,3 +14,9 @@ function get_files_names($path) {
 
     return $files_names;
 }
+
+function error($error_message) {
+    header('HTTP/1.1 500 Internal Server Error');
+    header('Content-type: text/plain');
+    exit($error_message);
+}

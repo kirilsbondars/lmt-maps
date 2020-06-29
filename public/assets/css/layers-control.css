@@ -1,0 +1,13 @@
+/*LAYERS MANAGER*/
+
+#layersTables tr {
+    /*background-color: #dc3545;*/
+}
+
+.btn {
+    padding: 0 !important;
+}
+
+.actionsColumn {
+    text-align: center;
+}
