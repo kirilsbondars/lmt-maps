@@ -33,7 +33,7 @@ function mapShow() {
 }
 
 function updateLayersList() {
-    $.post("./files/get_files_names_checkbox.php", function (data) {
+    $.post("./layers/get_files_names_checkbox.php", function (data) {
         $("#choice_layers").html(data);
     });
 }
@@ -45,7 +45,7 @@ $(document).on('click','#choice_layers input:checkbox',function(){
         if (layers[$(this).val()] === undefined) {
             layers[$(this).val()] = new ol.layer.Vector({
                 source: new ol.source.Vector({
-                    url: './files/get_layer.php?file=' + $(this).val(),
+                    url: './layers/get_layer.php?file=' + $(this).val(),
                     format: new ol.format.KML()
                 })
             });
@@ -56,25 +56,3 @@ $(document).on('click','#choice_layers input:checkbox',function(){
         map.removeLayer(layers[$(this).val()]);
     }
 })
-
-// Upload files
-Dropzone.options.fileUpload = {
-    paramName: "fileToUpload",
-    Filesize: 200,
-    acceptedFiles:".kml, .geojson",
-    parallelUploads: 1,
-    dictDefaultMessage: "Drop files(*.KML, *.GEOJSON) here to upload",
-    init: function(){
-        let myDropzone = this;
-
-        this.on("queuecomplete", function () {
-            alert("Uploading finished");
-            //закрыть окно если нет ошибок
-            //если есть ошибки вывести их alert bootstrap
-        })
-
-        this.on("success", function (file) {
-            myDropzone.removeFile(file);
-        })
-    },
-};

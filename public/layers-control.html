@@ -17,32 +17,52 @@
 </head>
 <body>
     <div class="container">
-        <form action="files/upload_file.php" class="dropzone m-2" id="fileUpload"></form>
+        <form action="layers/upload_file.php" class="dropzone m-2" id="fileUpload"></form>
 
         <table class="table" id="layersTables">
             <thead class="thead-dark">
                 <tr>
-                    <th scope="col">#</th>
                     <th scope="col">Name</th>
-                    <th scope="col">Style</th>
-                    <th scope="col">Actions</th>
+                    <th scope="col" style="width: 80px">Style</th>
+                    <th scope="col" style="width: 80px">Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td class="actionsColumn">
-                        <button class="btn"><i class="fa fa-pencil-square-o fa-lg"></i></button>
-                        <button class="btn"><i class="fa fa-trash fa-lg"></i></button>
-                    </td>
-                </tr>
             </tbody>
         </table>
     </div>
 
-    <!-- jQuery-->
+    <!-- Modal edit layer -->
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Edit layer</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="name" class="col-form-label">Name:</label>
+                            <input type="text" class="form-control" id="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="text" class="col-form-label">Style:</label>
+                            <textarea class="form-control" id="text"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <!-- Bootstrap and others -->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

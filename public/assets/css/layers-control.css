@@ -4,10 +4,18 @@
     /*background-color: #dc3545;*/
 }
 
-.btn {
+.edit, .delete {
     padding: 0 !important;
 }
 
 .actionsColumn {
     text-align: center;
+}
+
+.red {
+    color: 	#8B0000;
+}
+
+.green {
+    color: darkgreen;
 }

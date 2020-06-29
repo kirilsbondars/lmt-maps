@@ -25,7 +25,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
  * Copyright (c) 2012, Matias Meno
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
+ * of this software and associated documentation layers (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
@@ -168,14 +168,14 @@ function (_Emitter) {
         /**
          * Has to be specified on elements other than form (or when the form
          * doesn't have an `action` attribute). You can also
-         * provide a function that will be called with `files` and
+         * provide a function that will be called with `layers` and
          * must return the url (since `v3.12.0`)
          */
         url: null,
 
         /**
          * Can be changed to `"put"` if necessary. You can also provide a function
-         * that will be called with `files` and must return the method (since `v3.12.0`).
+         * that will be called with `layers` and must return the method (since `v3.12.0`).
          */
         method: "post",
 
@@ -196,7 +196,7 @@ function (_Emitter) {
         parallelUploads: 2,
 
         /**
-         * Whether to send multiple files in one request. If
+         * Whether to send multiple layers in one request. If
          * this it set to true, then the fallback file input element will
          * have the `multiple` attribute as well. This option will
          * also trigger additional events (like `processingmultiple`). See the events
@@ -205,7 +205,7 @@ function (_Emitter) {
         uploadMultiple: false,
 
         /**
-         * Whether you want files to be uploaded in chunks to your server. This can't be
+         * Whether you want layers to be uploaded in chunks to your server. This can't be
          * used in combination with `uploadMultiple`.
          *
          * See [chunksUploaded](#config-chunksUploaded) for the callback to finalise an upload.
@@ -240,9 +240,9 @@ function (_Emitter) {
         retryChunksLimit: 3,
 
         /**
-         * If not `null` defines how many files this Dropzone handles. If it exceeds,
+         * If not `null` defines how many layers this Dropzone handles. If it exceeds,
          * the event `maxfilesexceeded` will be called. The dropzone element gets the
-         * class `dz-max-files-reached` accordingly so you can provide visual feedback.
+         * class `dz-max-layers-reached` accordingly so you can provide visual feedback.
          */
         maxFilesize: 256,
 
@@ -321,7 +321,7 @@ function (_Emitter) {
         filesizeBase: 1000,
 
         /**
-         * Can be used to limit the maximum number of files that will be handled by this Dropzone
+         * Can be used to limit the maximum number of layers that will be handled by this Dropzone
          */
         maxFiles: null,
 
@@ -342,7 +342,7 @@ function (_Emitter) {
         clickable: true,
 
         /**
-         * Whether hidden files in directories should be ignored.
+         * Whether hidden layers in directories should be ignored.
          */
         ignoreHiddenFiles: true,
 
@@ -366,10 +366,10 @@ function (_Emitter) {
         acceptedMimeTypes: null,
 
         /**
-         * If false, files will be added to the queue but the queue will not be
+         * If false, layers will be added to the queue but the queue will not be
          * processed automatically.
          * This can be useful if you need some additional user input before sending
-         * files (or if you want want all files sent at once).
+         * layers (or if you want want all layers sent at once).
          * If you're ready to send the file simply call `myDropzone.processQueue()`.
          *
          * See the [enqueuing file uploads](#enqueuing-file-uploads) documentation
@@ -378,7 +378,7 @@ function (_Emitter) {
         autoProcessQueue: true,
 
         /**
-         * If false, files added to the dropzone will not be queued by default.
+         * If false, layers added to the dropzone will not be queued by default.
          * You'll have to call `enqueueFile(file)` manually.
          */
         autoQueue: true,
@@ -438,9 +438,9 @@ function (_Emitter) {
         forceFallback: false,
 
         /**
-         * The text used before any files are dropped.
+         * The text used before any layers are dropped.
          */
-        dictDefaultMessage: "Drop files here to upload",
+        dictDefaultMessage: "Drop layers here to upload",
 
         /**
          * The text that replaces the default message text it the browser is not supported.
@@ -452,7 +452,7 @@ function (_Emitter) {
          * If you provide a  fallback element yourself, or if this option is `null` this will
          * be ignored.
          */
-        dictFallbackText: "Please use the fallback form below to upload your files like in the olden days.",
+        dictFallbackText: "Please use the fallback form below to upload your layers like in the olden days.",
 
         /**
          * If the filesize is too big.
@@ -463,7 +463,7 @@ function (_Emitter) {
         /**
          * If the file doesn't match the file type.
          */
-        dictInvalidFileType: "You can't upload files of this type.",
+        dictInvalidFileType: "You can't upload layers of this type.",
 
         /**
          * If the server response was invalid.
@@ -500,7 +500,7 @@ function (_Emitter) {
          * Displayed if `maxFiles` is st and exceeded.
          * The string `{{maxFiles}}` will be replaced by the configuration value.
          */
-        dictMaxFilesExceeded: "You can not upload any more files.",
+        dictMaxFilesExceeded: "You can not upload any more layers.",
 
         /**
          * Allows you to translate the different units. Starting with `tb` for terabytes and going down to
@@ -522,7 +522,7 @@ function (_Emitter) {
 
         /**
          * Can be an **object** of additional parameters to transfer to the server, **or** a `Function`
-         * that gets invoked with the `files`, `xhr` and, if it's a chunked upload, `chunk` arguments. In case
+         * that gets invoked with the `layers`, `xhr` and, if it's a chunked upload, `chunk` arguments. In case
          * of a function, this needs to return a map.
          *
          * The default implementation does nothing for normal uploads, but adds relevant information for
@@ -748,7 +748,7 @@ function (_Emitter) {
           return this.element.classList.remove("dz-drag-hover");
         },
         paste: function paste(e) {},
-        // Called whenever there are no files left in the dropzone anymore, and the
+        // Called whenever there are no layers left in the dropzone anymore, and the
         // dropzone should be displayed as if in the initial state.
         reset: function reset() {
           return this.element.classList.remove("dz-started");
@@ -944,7 +944,7 @@ function (_Emitter) {
         },
         errormultiple: function errormultiple() {},
         // Called when a file gets processed. Since there is a cue, not all added
-        // files are processed immediately.
+        // layers are processed immediately.
         // Receives `file`
         processing: function processing(file) {
           if (file.previewElement) {
@@ -1061,7 +1061,7 @@ function (_Emitter) {
     _this.defaultOptions.previewTemplate = _this.defaultOptions.previewTemplate.replace(/\n*/g, "");
     _this.clickableElements = [];
     _this.listeners = [];
-    _this.files = []; // All files
+    _this.files = []; // All layers
 
     if (typeof _this.element === "string") {
       _this.element = document.querySelector(_this.element);
@@ -1144,7 +1144,7 @@ function (_Emitter) {
     _this.init();
 
     return _this;
-  } // Returns all files that have been accepted
+  } // Returns all layers that have been accepted
 
 
   _createClass(Dropzone, [{
@@ -1155,7 +1155,7 @@ function (_Emitter) {
       }).map(function (file) {
         return file;
       });
-    } // Returns all files that have been rejected
+    } // Returns all layers that have been rejected
     // Not sure when that's going to be useful, but added for completeness.
 
   }, {
@@ -1175,7 +1175,7 @@ function (_Emitter) {
       }).map(function (file) {
         return file;
       });
-    } // Returns all files that are in the queue
+    } // Returns all layers that are in the queue
 
   }, {
     key: "getQueuedFiles",
@@ -1326,7 +1326,7 @@ function (_Emitter) {
       });
       this.on("canceled", function (file) {
         return _this3.emit("complete", file);
-      }); // Emit a `queuecomplete` event if all files finished uploading.
+      }); // Emit a `queuecomplete` event if all layers finished uploading.
 
       this.on("complete", function (file) {
         if (_this3.getAddedFiles().length === 0 && _this3.getUploadingFiles().length === 0 && _this3.getQueuedFiles().length === 0) {
@@ -1344,7 +1344,7 @@ function (_Emitter) {
       };
 
       var noPropagation = function noPropagation(e) {
-        // If there are no files, we don't want to stop
+        // If there are no layers, we don't want to stop
         // propagation so we don't interfere with other
         // drag and drop behaviour.
         if (!containsFiles(e)) return;
@@ -1369,7 +1369,7 @@ function (_Emitter) {
             return _this3.emit("dragenter", e);
           },
           "dragover": function dragover(e) {
-            // Makes it possible to drag files from chrome's download bar
+            // Makes it possible to drag layers from chrome's download bar
             // http://stackoverflow.com/questions/19526430/drag-and-drop-file-uploads-from-chrome-downloads-bar
             // Try is required to prevent bug in Internet Explorer 11 (SCRIPT65535 exception)
             var efct;
@@ -1605,7 +1605,7 @@ function (_Emitter) {
           return result;
         }();
       });
-    } // Removes all event listeners and cancels all files in the queue or being processed.
+    } // Removes all event listeners and cancels all layers in the queue or being processed.
 
   }, {
     key: "disable",
@@ -1655,7 +1655,7 @@ function (_Emitter) {
       }
 
       return "<strong>".concat(selectedSize, "</strong> ").concat(this.options.dictFileSizeUnits[selectedUnit]);
-    } // Adds or removes the `dz-max-files-reached` class from the form.
+    } // Adds or removes the `dz-max-layers-reached` class from the form.
 
   }, {
     key: "_updateMaxFilesReachedClass",
@@ -1665,9 +1665,9 @@ function (_Emitter) {
           this.emit('maxfilesreached', this.files);
         }
 
-        return this.element.classList.add("dz-max-files-reached");
+        return this.element.classList.add("dz-max-layers-reached");
       } else {
-        return this.element.classList.remove("dz-max-files-reached");
+        return this.element.classList.remove("dz-max-layers-reached");
       }
     }
   }, {
@@ -1684,14 +1684,14 @@ function (_Emitter) {
 
       for (var i = 0; i < e.dataTransfer.files.length; i++) {
         files[i] = e.dataTransfer.files[i];
-      } // Even if it's a folder, files.length will contain the folders.
+      } // Even if it's a folder, layers.length will contain the folders.
 
 
       if (files.length) {
         var items = e.dataTransfer.items;
 
         if (items && items.length && items[0].webkitGetAsEntry != null) {
-          // The browser supports dropping of folders, so handle items instead of files
+          // The browser supports dropping of folders, so handle items instead of layers
           this._addFilesFromItems(items);
         } else {
           this.handleFiles(files);
@@ -1742,8 +1742,8 @@ function (_Emitter) {
           }
         }
       }
-    } // When a folder is dropped (or files are pasted), items must be handled
-    // instead of files.
+    } // When a folder is dropped (or layers are pasted), items must be handled
+    // instead of layers.
 
   }, {
     key: "_addFilesFromItems",
@@ -1765,7 +1765,7 @@ function (_Emitter) {
               if (entry.isFile) {
                 result.push(_this5.addFile(item.getAsFile()));
               } else if (entry.isDirectory) {
-                // Append all files from that directory to files
+                // Append all layers from that directory to layers
                 result.push(_this5._addFilesFromDirectory(entry, entry.name));
               } else {
                 result.push(undefined);
@@ -2018,12 +2018,12 @@ function (_Emitter) {
       if (this.files.length === 0) {
         return this.emit("reset");
       }
-    } // Removes all files that aren't currently processed from the list
+    } // Removes all layers that aren't currently processed from the list
 
   }, {
     key: "removeAllFiles",
     value: function removeAllFiles(cancelIfNecessary) {
-      // Create a copy of files since removeFile() changes the @files array.
+      // Create a copy of layers since removeFile() changes the @layers array.
       if (cancelIfNecessary == null) {
         cancelIfNecessary = false;
       }
@@ -2241,14 +2241,14 @@ function (_Emitter) {
       }
 
       return img.src = file.dataURL;
-    } // Goes through the queue and processes files if there aren't too many already.
+    } // Goes through the queue and processes layers if there aren't too many already.
 
   }, {
     key: "processQueue",
     value: function processQueue() {
       var parallelUploads = this.options.parallelUploads;
       var processingLength = this.getUploadingFiles().length;
-      var i = processingLength; // There are already at least as many files uploading than should be
+      var i = processingLength; // There are already at least as many layers uploading than should be
 
       if (processingLength >= parallelUploads) {
         return;
@@ -2261,7 +2261,7 @@ function (_Emitter) {
       }
 
       if (this.options.uploadMultiple) {
-        // The files should be uploaded in one request
+        // The layers should be uploaded in one request
         return this.processFiles(queuedFiles.slice(0, parallelUploads - processingLength));
       } else {
         while (i < parallelUploads) {
@@ -2537,7 +2537,7 @@ function (_Emitter) {
       }
     } // This function actually uploads the file(s) to the server.
     // If dataBlocks contains the actual data to upload (meaning, that this could either be transformed
-    // files, or individual chunks for chunked upload).
+    // layers, or individual chunks for chunked upload).
 
   }, {
     key: "_uploadData",
@@ -2664,7 +2664,7 @@ function (_Emitter) {
         this.emit("sendingmultiple", files, xhr, formData);
       }
 
-      this._addFormElementData(formData); // Finally add the files
+      this._addFormElementData(formData); // Finally add the layers
       // Has to be last because some servers (eg: S3) expect the file to be the last parameter
 
 
@@ -2674,7 +2674,7 @@ function (_Emitter) {
       }
 
       this.submitRequest(xhr, formData, files);
-    } // Transforms all files with this.options.transformFile and invokes done with the transformed files when done.
+    } // Transforms all layers with this.options.transformFile and invokes done with the transformed layers when done.
 
   }, {
     key: "_transformFiles",
@@ -2765,7 +2765,7 @@ function (_Emitter) {
           }
         }
       }
-    } // Invoked when there is new progress information about given files.
+    } // Invoked when there is new progress information about given layers.
     // If e is not provided, it is assumed that the upload is finished.
 
   }, {
@@ -2869,7 +2869,7 @@ function (_Emitter) {
 
             _file4.upload.progress = progress;
             _file4.upload.bytesSent = _file4.upload.total;
-          } // Nothing to do, all files already at 100%
+          } // Nothing to do, all layers already at 100%
 
         } catch (err) {
           _didIteratorError27 = true;
