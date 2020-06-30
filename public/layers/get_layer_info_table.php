@@ -3,6 +3,6 @@ require_once("../../src/initialize.php");
 
 $id = $_GET["id"];
 
-$layer = new Layer($id);
+$layer = Layer::initialiseID($id);
 
-//array("name" => $layer->name, "style" => )
+$layer->print_table_row();

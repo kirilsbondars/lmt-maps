@@ -1,11 +1,10 @@
 <?php
 require_once("../../src/initialize.php");
 
+check_GET_var("id");
+
 $id = $_GET["id"];
 
 $layer = Layer::initialiseID($id);
 
-if(file_exists($layer->target_file)) {
-    unlink($layer->target_file);
-}
-$layer->delete_from_db();
+echo json_encode($layer->getArray());

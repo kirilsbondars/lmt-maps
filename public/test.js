@@ -1,21 +1,15 @@
-Dropzone.options.fileUpload = {
-    paramName: "fileToUpload",
-    Filesize: 200,
-    acceptedFiles:".kml, .geojson",
-    parallelUploads: 1,
-    timeout: 999999,
-    init: function(){
-        let myDropzone = this;
-        
-        this.on("queuecomplete", function () {
-            //alert("Uploading finished");
-            //закрыть окно если нет ошибок
-            //если есть ошибки вывести их alert bootstrap
-        })
+// var input = document.getElementById('name2');
+//
+// if(this.checked) {
+//     input.disabled = false;
+//     input.focus();
+// } else {
+//     input.disabled=true;
+// }
 
-        this.on("success", function (file) {
-            myDropzone.removeFile(file);
-        })
-    },
-
-};
+$("#colorCheckbox").on("click", function () {
+    if(this.checked) {
+        $("#strokeColor").attr("disabled", false)
+        console.log($("#strokeColor"));
+    }
+})

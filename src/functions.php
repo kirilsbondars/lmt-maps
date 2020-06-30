@@ -20,3 +20,8 @@ function error($error_message) {
     header('Content-type: text/plain');
     exit($error_message);
 }
+
+function check_GET_var($var) {
+    if(empty($_GET[$var]))
+        exit("You need to set " . $var . " in ajax request");
+}
