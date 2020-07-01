@@ -44,24 +44,35 @@
                 </div>
                 <div class="modal-body">
                     <form id="layerForm">
-                        <div class="form-group">
-                            <label for="name" class="col-form-label">Name:</label>
-                            <input type="text" class="form-control" id="name">
+                        <div class="form-row form-group">
+                            <label for="name" class="col-form-label col-2">Name:</label>
+                            <div class="col">
+                                <input type="text" class="form-control" id="name" name="name">
+                            </div>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="strokeCheckBox">
-                            <div class="form-row">
-                                <div class="col">
-                                    <label for="strokeColor" style="color: #aaaaaa">Stroke color:</label>
-                                    <input type="color" id="strokeColor" name="strokeColor" value="#ADD8E6" disabled>
-                                </div>
+                        <div class="form-row form-group">
+                            <div class="col-2 col-form-label">Stroke:</div>
+                            <div class="col">
+                                <input type="color" class="form-control" id="strokeColor" name="strokeColor">
+                            </div>
+                            <div class="col-3">
+                                <input type="number" class="form-control" id="strokeWidth" name="strokeWidth">
+                            </div>
+                        </div>
+                        <div class="form-row form-group">
+                            <div class="col-2 col-form-label">Point:</div>
+                            <div class="col">
+                                <input type="color" class="form-control" id="pointColor" name="pointColor">
+                            </div>
+                            <div class="col-3">
+                                <input type="number" class="form-control" id="pointRadius" name="pointRadius">
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" id="layerFormButton" class="btn btn-primary" form="layerForm">Save</button>
+                    <button type="button submit" id="layerFormButton" class="btn btn-primary" form="layerForm">Save</button>
                 </div>
             </div>
         </div>

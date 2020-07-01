@@ -50,11 +50,18 @@ $(document).on('click','#choice_layers input:checkbox',function(){
                         extractStyles: false
                     })
                 }),
-                // style: new ol.style.Style({
-                //     stroke: new ol.style.Stroke({
-                //         color: 'blue'
-                //     })
-                // })
+                style: new ol.style.Style({
+                    stroke: new ol.style.Stroke({
+                        color: 'green',
+                        width: 15
+                    }),
+                    image: new ol.style.Circle({
+                        radius: '5',
+                        fill: new ol.style.Fill({
+                            color: 'orange'
+                        })
+                    })
+                })
             });
         }
 
@@ -63,3 +70,5 @@ $(document).on('click','#choice_layers input:checkbox',function(){
         map.removeLayer(layers[$(this).val()]);
     }
 })
+
+

@@ -25,3 +25,9 @@ function check_GET_var($var) {
     if(empty($_GET[$var]))
         exit("You need to set " . $var . " in ajax request");
 }
+
+function check_POST_request() {
+    if ($_SERVER["REQUEST_METHOD"] != "POST") {
+        exit("This page is only for POST requests");
+    }
+}

@@ -4,7 +4,7 @@ $(document).ready( function () {
 
     $(document).on ("click", ".delete", function () {
         deleteLayer(this);
-    })
+    });
 });
 
 // Load layers to the table
@@ -30,12 +30,69 @@ $('#editModal').on('show.bs.modal', function (event) {
     let modal = $(this);
     $.get("./layers/get_info.php?id=" + id, function (dataJSON, status) {
         let layer = JSON.parse(dataJSON);
-        console.log(layer);
+        let style = JSON.parse(layer["style"]);
+
         modal.find('.modal-title').text('Editing layer "' + layer["name"] + '" (id=' + layer['id'] +')');
-        //modal.find('.modal-body input').val(layer['name']);
-        //modal.find('.modal-body textarea').val(layer['style']);
+        $("#name").val(layer["name"]);
+        $("#strokeColor").val(style["stroke"]["color"]);
+        $("#strokeWidth").val(style["stroke"]["width"]);
+        $("#pointColor").val(style["circle"]["fill"]["color"]);
+        $("#pointRadius").val(style["circle"]["radius"]);
     })
 })
+
+// Modal submits
+$("#layerForm").submit(function (event) {
+    event.preventDefault();
+    let url = "./layers/change.php";
+    let input = JSON.stringify($("#layerForm").serializeArray());
+
+    // $.post("./layers/change.php", input, function (data, status) {
+    //     console.log(data);
+    // })
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: {"name": "kuku"},
+        dataType: "txt",
+        contentType: "application/json",
+        success: function () {
+            console.log("success");
+        },
+        error: function () {
+            console.log("error");
+        }
+    });
+})
+
+// Get attribute from string (OpenLayers style)
+function getElement(style, figure, attr) {
+    let start = style.indexOf(figure);
+    let startAll = style.substring(start);
+    let end = startAll.indexOf("})");
+    let part = startAll.substring(0, end);
+    let elementIndex = startAll.indexOf(attr);
+    let element1 = part.substring(elementIndex + attr.length + 3);
+    let elementLastSymb = element1.indexOf("'");
+    let element = element1.substring(0, elementLastSymb);
+    console.log(element);
+
+    json = '{\n' +
+        '  "stoke": {\n' +
+        '    "color": "blue"\n' +
+        '  },\n' +
+        '  "circle": {\n' +
+        '    "radius": "5",\n' +
+        '    "fill": {\n' +
+        '      "color": "orage"\n' +
+        '    }\n' +
+        '  }\n' +
+        '}';
+
+    let fjson = JSON.parse(json);
+    console.log(fjson);
+}
 
 // Get layer by id and print it in the table
 function getLayerByIDPrintInTable(id) {
@@ -70,10 +127,5 @@ Dropzone.options.fileUpload = {
         })
     },
 };
-
-$("#strokeCheckBox").change(function (event) {
-    console.log(event.checked);
-
-})
 
 

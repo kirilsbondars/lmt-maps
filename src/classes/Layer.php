@@ -25,7 +25,7 @@ class Layer extends DatabaseObject
     public static function add_to_db($name, $path) {
         $layer = new Layer($name, $path);
 
-        self::run_sql("INSERT INTO lmt_map.layer(name, path, style) VALUES (\"" .$layer->name. "\", \"" .$layer->target_file. "\", \"" .$layer->style. "\")");
+        self::run_sql("INSERT INTO lmt_map.layer(name, path, style) VALUES (\"" .$layer->name. "\", \"" .$layer->target_file. "\", '" .$layer->style. "')");
         $result = self::find_by_sql("SELECT id FROM lmt_map.layer WHERE path = '$path'");
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
@@ -119,10 +119,8 @@ class Layer extends DatabaseObject
     }
 
     public function setDefaultStyle() {
-        $this->style = "style: new ol.style.Style({
-                    stroke: new ol.style.Stroke({
-                        color: 'blue'
-                    })
-                })";
+        $test = array("stroke" => array("color" => "#66ccff", "width" => "5"), "circle" => array("radius" => "5", "fill" => array("color" => "#FFA500")));
+
+        $this->style = json_encode($test);
     }
 }

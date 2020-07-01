@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.2
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3306
--- Generation Time: Jun 29, 2020 at 06:32 AM
--- Server version: 10.4.10-MariaDB
--- PHP Version: 7.4.0
+-- Host: 127.0.0.1
+-- Generation Time: Jul 01, 2020 at 02:32 PM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.4.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -28,25 +27,33 @@ SET time_zone = "+00:00";
 -- Table structure for table `layer`
 --
 
-DROP TABLE IF EXISTS `layer`;
-CREATE TABLE IF NOT EXISTS `layer` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `layer` (
+  `id` int(11) NOT NULL,
   `name` tinytext NOT NULL,
   `path` tinytext NOT NULL,
-  `style` text NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `layer_path_uindex` (`path`) USING HASH
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4;
+  `style` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`style`))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `layer`
+-- Indexes for dumped tables
 --
 
-INSERT INTO `layer` (`id`, `name`, `path`, `style`) VALUES
-(19, 'PLS1.kml', 'C:/wamp64/www/lmt-maps/src/data/PLS1.kml', 'hello'),
-(20, 'PLS2.kml', 'C:/wamp64/www/lmt-maps/src/data/PLS2.kml', 'hello'),
-(21, 'Torņi LMT plānoti pieslēgt.kml', 'C:/wamp64/www/lmt-maps/src/data/Torņi LMT plānoti pieslēgt.kml', 'hello'),
-(22, 'Maģistrālā optika.kml', 'C:/wamp64/www/lmt-maps/src/data/Maģistrālā optika.kml', 'hello');
+--
+-- Indexes for table `layer`
+--
+ALTER TABLE `layer`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `layer_path_uindex` (`path`) USING HASH;
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `layer`
+--
+ALTER TABLE `layer`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=168;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

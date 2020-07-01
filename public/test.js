@@ -13,3 +13,7 @@ $("#colorCheckbox").on("click", function () {
         console.log($("#strokeColor"));
     }
 })
+
+$(function () {
+    $('[data-toggle="popover"]').popover()
+})
