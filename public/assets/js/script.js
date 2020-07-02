@@ -50,7 +50,6 @@ $(document).on('click','#choice_layers input:checkbox',function(){
         async: false,
         success : function (data, status) {
             style = JSON.parse(data);
-            console.log(style);
         }
     });
 

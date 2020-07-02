@@ -29,6 +29,7 @@ $('#editModal').on('show.bs.modal', function (event) {
     let id = button.val();
     let modal = $(this);
     $.get("./layers/get_info.php?id=" + id, function (dataJSON, status) {
+        console.log(dataJSON);
         let layer = JSON.parse(dataJSON);
         let style = JSON.parse(layer["style"]);
 
