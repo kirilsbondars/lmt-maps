@@ -39,7 +39,20 @@ function updateLayersList() {
 }
 
 $(document).on('click','#choice_layers input:checkbox',function(){
+    let id = $(this).val();
+    let style;
+
     console.log($(this).val() + " " + $(this).prop("checked"));
+
+    $.ajax({
+        url : "./layers/get_layer_style.php?id=" + id,
+        type : "get",
+        async: false,
+        success : function (data, status) {
+            style = JSON.parse(data);
+            console.log(style);
+        }
+    });
 
     if ($(this).prop("checked")) {
         if (layers[$(this).val()] === undefined) {
@@ -52,13 +65,13 @@ $(document).on('click','#choice_layers input:checkbox',function(){
                 }),
                 style: new ol.style.Style({
                     stroke: new ol.style.Stroke({
-                        color: 'green',
-                        width: 15
+                        color: style["stroke"]["color"],
+                        width: style["stroke"]["width"]
                     }),
                     image: new ol.style.Circle({
-                        radius: '5',
+                        radius: style["circle"]["radius"],
                         fill: new ol.style.Fill({
-                            color: 'orange'
+                            color: style["circle"]["fill"]["color"]
                         })
                     })
                 })

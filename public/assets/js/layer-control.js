@@ -34,6 +34,7 @@ $('#editModal').on('show.bs.modal', function (event) {
 
         modal.find('.modal-title').text('Editing layer "' + layer["name"] + '" (id=' + layer['id'] +')');
         $("#name").val(layer["name"]);
+        $("#id").val(id);
         $("#strokeColor").val(style["stroke"]["color"]);
         $("#strokeWidth").val(style["stroke"]["width"]);
         $("#pointColor").val(style["circle"]["fill"]["color"]);
@@ -45,27 +46,15 @@ $('#editModal').on('show.bs.modal', function (event) {
 $("#layerForm").submit(function (event) {
     event.preventDefault();
     let url = "./layers/change.php";
-    let input = JSON.stringify($("#layerForm").serializeArray());
+    let input = JSON.stringify($("#layerForm").formToJson());
 
-    // $.post("./layers/change.php", input, function (data, status) {
-    //     console.log(data);
-    // })
-
-    $.ajax({
-        type: "POST",
-        url: url,
-        data: {"name": "kuku"},
-        dataType: "txt",
-        contentType: "application/json",
-        success: function () {
-            console.log("success");
-        },
-        error: function () {
-            console.log("error");
+    $.post("./layers/change.php", input, function (data, status) {
+        if(data) {
+            getLayers();
+            $("#editModal").modal("hide");
         }
-    });
+    })
 })
-
 // Get attribute from string (OpenLayers style)
 function getElement(style, figure, attr) {
     let start = style.indexOf(figure);
@@ -110,9 +99,9 @@ function getLayerByIDPrintInTable(id) {
 Dropzone.options.fileUpload = {
     paramName: "fileToUpload",
     Filesize: 200,
-    acceptedFiles:".kml, .geojson",
+    acceptedFiles:".kml",
     parallelUploads: 1,
-    dictDefaultMessage: "Drop layers(*.KML, *.GEOJSON) here to upload",
+    dictDefaultMessage: "Drop layers(*.KML) here to upload",
     timeout: 99999,
     init: function(){
         let myDropzone = this;

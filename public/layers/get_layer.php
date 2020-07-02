@@ -1,7 +1,10 @@
 <?php
 require_once("../../src/initialize.php");
 
-$file_path = DATA . $_GET["file"];
+check_GET_var("file");
+$id = $_GET["file"];
+
+$file_path = Layer::getPath($id);
 
 $file = fopen($file_path, 'rb');
 if ( $file !== false ) {

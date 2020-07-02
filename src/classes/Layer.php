@@ -36,6 +36,10 @@ class Layer extends DatabaseObject
         return $layer;
     }
 
+    public function change() {
+        return self::find_by_sql("UPDATE lmt_map.layer SET name = '$this->name', style = '$this->style' WHERE id = $this->id");
+    }
+
     public function __construct()
     {
         $arguments = func_get_args();
@@ -44,6 +48,14 @@ class Layer extends DatabaseObject
         if (method_exists($this, $function = '__construct'.$numberOfArguments)) {
             call_user_func_array(array($this, $function), $arguments);
         }
+    }
+
+    public static function getPath($id) {
+        return self::find_by_sql_single("SELECT path FROM lmt_map.layer WHERE id = $id");
+    }
+
+    public static function getStyle($id) {
+        return self::find_by_sql_single("SELECT style FROM lmt_map.layer WHERE id = $id");
     }
 
     public function __construct0()
@@ -119,8 +131,14 @@ class Layer extends DatabaseObject
     }
 
     public function setDefaultStyle() {
-        $test = array("stroke" => array("color" => "#66ccff", "width" => "5"), "circle" => array("radius" => "5", "fill" => array("color" => "#FFA500")));
+        $test = array("stroke" => array("color" => "#66ccff", "width" => "2"), "circle" => array("radius" => "4", "fill" => array("color" => "#FFA500")));
 
         $this->style = json_encode($test);
+    }
+
+    public function setCustomStyle($strokeColor, $strokeWidth, $circleColor, $circleRadius) {
+        $style = array("stroke" => array("color" => $strokeColor, "width" => $strokeWidth), "circle" => array("radius" => $circleRadius, "fill" => array("color" => $circleColor)));
+
+        $this->style = json_encode($style);
     }
 }

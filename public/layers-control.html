@@ -45,27 +45,33 @@
                 <div class="modal-body">
                     <form id="layerForm">
                         <div class="form-row form-group">
+                            <label for="name" class="col-form-label col-2">ID:</label>
+                            <div class="col">
+                                <input type="text" class="form-control" id="id" name="id" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row form-group">
                             <label for="name" class="col-form-label col-2">Name:</label>
                             <div class="col">
-                                <input type="text" class="form-control" id="name" name="name">
+                                <input type="text" class="form-control" id="name" name="name" required>
                             </div>
                         </div>
                         <div class="form-row form-group">
                             <div class="col-2 col-form-label">Stroke:</div>
                             <div class="col">
-                                <input type="color" class="form-control" id="strokeColor" name="strokeColor">
+                                <input type="color" class="form-control" id="strokeColor" name="strokeColor" required>
                             </div>
                             <div class="col-3">
-                                <input type="number" class="form-control" id="strokeWidth" name="strokeWidth">
+                                <input type="number" class="form-control" id="strokeWidth" name="strokeWidth" required>
                             </div>
                         </div>
                         <div class="form-row form-group">
                             <div class="col-2 col-form-label">Point:</div>
                             <div class="col">
-                                <input type="color" class="form-control" id="pointColor" name="pointColor">
+                                <input type="color" class="form-control" id="pointColor" name="pointColor" required>
                             </div>
                             <div class="col-3">
-                                <input type="number" class="form-control" id="pointRadius" name="pointRadius">
+                                <input type="number" class="form-control" id="pointRadius" name="pointRadius" required>
                             </div>
                         </div>
                     </form>
@@ -85,6 +91,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <!-- DropZone -->
     <script src="./assets/dropzonejs/dropzone.js"></script>
+    <!-- formToJSON -->
+    <script src="assets/formToJSON/formToJson.min.js"></script>
     <!-- My JS -->
     <script src="assets/js/layer-control.js"></script>
 </body>
