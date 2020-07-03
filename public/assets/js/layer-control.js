@@ -56,33 +56,6 @@ $("#layerForm").submit(function (event) {
         }
     })
 })
-// Get attribute from string (OpenLayers style)
-function getElement(style, figure, attr) {
-    let start = style.indexOf(figure);
-    let startAll = style.substring(start);
-    let end = startAll.indexOf("})");
-    let part = startAll.substring(0, end);
-    let elementIndex = startAll.indexOf(attr);
-    let element1 = part.substring(elementIndex + attr.length + 3);
-    let elementLastSymb = element1.indexOf("'");
-    let element = element1.substring(0, elementLastSymb);
-    console.log(element);
-
-    json = '{\n' +
-        '  "stoke": {\n' +
-        '    "color": "blue"\n' +
-        '  },\n' +
-        '  "circle": {\n' +
-        '    "radius": "5",\n' +
-        '    "fill": {\n' +
-        '      "color": "orage"\n' +
-        '    }\n' +
-        '  }\n' +
-        '}';
-
-    let fjson = JSON.parse(json);
-    console.log(fjson);
-}
 
 // Get layer by id and print it in the table
 function getLayerByIDPrintInTable(id) {
@@ -106,10 +79,6 @@ Dropzone.options.fileUpload = {
     timeout: 99999,
     init: function(){
         let myDropzone = this;
-
-        // this.on("queuecomplete", function () {
-        //     getLayers();
-        // })
 
         this.on("success", function (file, response) {
             myDropzone.removeFile(file);

@@ -23,7 +23,7 @@ foreach($possible_attr as $attr) {
 
 $layer = new Layer();
 $layer->id = $post["id"];
-$layer->name = $post["name"];
+$layer->name = htmlspecialchars($post["name"]);
 $layer->setCustomStyle($post["strokeColor"], $post["strokeWidth"], $post["pointColor"], $post["pointRadius"]);
 echo $layer->change();
 
