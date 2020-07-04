@@ -8,6 +8,8 @@
     <title>LMT map</title>
     <!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
     <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=fetch,requestAnimationFrame,Element.prototype.classList,URL"></script>
+    <!--Font Awesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <!-- OpenLayers -->
@@ -17,24 +19,15 @@
 </head>
 <body>
 
-<!-- Container -->
-<div class="container-fluid">
-    <div id="row" class="row">
+    <div id="map" class="map"></div>
 
-        <!-- Layers chooser -->
-        <div id="layers" class="col-md-4">
-            <h5>Choose files to display:</h5>
-            <form id="choice_layers"></form>
+    <div id="layers">
+        <h5>Choose files to display:</h5>
+        <form id="choice_layers"></form>
 
-            <div id="control-panel">
-                <a href="layers-control.html" class="btn btn-primary btn-block" id="LayersManagerButton">Layers manager</a>
-            </div>
-        </div>
-
-        <!-- Map -->
-        <div id="map" class="map col-md-8"></div>
+        <a href="layers-control.html" class="btn btn-primary" id="layersManagerButton">Layers manager</a>
+        <button id="menuButton"><i class="fa fa-sort-asc"></i></button>
     </div>
-</div>
 
 <!-- OpenLayers -->
 <script src="assets/ol/ol.js"></script>

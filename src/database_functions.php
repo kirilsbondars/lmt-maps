@@ -5,9 +5,9 @@ function db_connect() {
     $connection = new mysqli(DB_SERVER, DB_USER, DB_PASS);
     confirm_db_connect($connection);
     mysqli_set_charset($connection, "utf8");
-    create_db($connection);
+//    create_db($connection);
     mysqli_select_db($connection, DB_NAME);
-    create_tables($connection);
+//    create_tables($connection);
     return $connection;
 }
 

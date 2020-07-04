@@ -22,14 +22,18 @@ function mapShow() {
     });
 
     map = new ol.Map({
+        controls: [],
+        target: 'map',
         layers: [layer_map],
-        target: "map",
         view: new ol.View({
-            center: [2738815.70, 7735549.67],
-            projection: "EPSG:3857",
+            center: ol.proj.fromLonLat([24.6032, 56.8796]),
             zoom: 7
         })
     });
+
+    // map.addControl(new ol.control.Zoom({
+    //     className: 'custom-zoom'
+    // }));
 }
 
 function updateLayersList() {
@@ -83,4 +87,7 @@ $(document).on('click','#choice_layers input:checkbox',function(){
     }
 })
 
+$("#menuButton").on("click", function () {
+    $("#menuButton").css({"transform":"rotate(180deg)"});
+})
 
