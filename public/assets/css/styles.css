@@ -8,7 +8,7 @@
 
 #layers {
     position: fixed;
-    bottom: 10px;
+    top: 10px;
     left: 10px;
     width: 300px;
     height: calc(100% - 20px);
@@ -16,6 +16,11 @@
     text-align: center;
     background-color: white;
     border-radius: 8px;
+}
+
+#choice_layers {
+    max-height: calc(100% - 120px);
+    overflow: auto;
 }
 
 #layersManagerButton {
@@ -36,6 +41,25 @@
     position: absolute;
     left: calc(50% - 15px);
     bottom: -2px;
+}
+
+#menuCheckBox {
+    position: absolute;
+    bottom: 0;
+    left: calc(50% - 15px);
+}
+
+#menuCheckBox label {
+    cursor: pointer;
+}
+
+#menuCheckBox input {
+    display: none;
+}
+
+#menuCheckBox img {
+    height: 30px;
+    width: 30px;
 }
 
 /*.custom-zoom{*/

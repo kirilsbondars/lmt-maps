@@ -87,7 +87,42 @@ $(document).on('click','#choice_layers input:checkbox',function(){
     }
 })
 
-$("#menuButton").on("click", function () {
-    $("#menuButton").css({"transform":"rotate(180deg)"});
+$("#menuCheckBox input").change(function () {
+    if($(this).prop("checked")) {
+        rotate("#menuCheckBox img", 180);
+        layerMenu(true, 1000);
+    } else {
+        rotate("#menuCheckBox img", 0);
+        layerMenu(false, 1000);
+    }
 })
+
+function rotate(element, degree, duration) {
+    $(element).animate({deg: degree}, {
+        duration: duration,
+        step: function(now) {
+            $(this).css({
+                transform: 'rotate(' + now + 'deg)'
+            });
+        }
+    });
+}
+
+function layerMenu(close, speed) {
+    if(close) {
+        let layersHeight = 0;
+
+        $("#layers").children().each(function () {
+            layersHeight += $(this).outerHeight();
+        });
+        $("#layers").animate({
+            height: layersHeight + 30,
+        }, speed);
+    } else {
+        $("#layers").animate({
+            height: $( document ).height() - 20,
+        }, speed);
+    }
+}
+
 
