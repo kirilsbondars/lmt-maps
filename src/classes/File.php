@@ -23,7 +23,7 @@ class File
         if (file_exists($this->target_file))
             error("Sorry, file already exists. ");
 
-        if ($this->type != "kml" && $this->type != "geojson")
+        if ($this->type != "kml" && $this->type != "txt")
             error("Sorry, only KML and GeoJson layers are allowed.");
     }
 
@@ -32,17 +32,25 @@ class File
             error("Sorry, there was an error uploading your file.");
     }
 
-    public static function delete($path) {
-        echo unlink($path);
+    public function delete() {
+        return unlink($this->target_file);
     }
 
     public static function rename($path, $new_path) {
-        echo rename($path, $new_path);
+        return rename($path, $new_path);
     }
 
     public function covert_to_kml() {
         $new_path = str_replace('\\', '/',DATA . generate_unique_filename(DATA) . ".kml");
 
-        //convert_to_kml($this->target_file,)
+        if(!convert_to_kml($this->target_file, $new_path)) {
+            $this->delete();
+            error("Error converting");
+        }
+
+        $this->delete();
+
+        $this->target_file = $new_path;
+        $this->type = "kml";
     }
 }

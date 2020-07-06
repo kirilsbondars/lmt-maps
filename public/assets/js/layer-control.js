@@ -73,7 +73,7 @@ function getLayerByIDPrintInTable(id) {
 Dropzone.options.fileUpload = {
     paramName: "fileToUpload",
     Filesize: 200,
-    acceptedFiles:".kml",
+    acceptedFiles:".kml, .txt",
     parallelUploads: 1,
     dictDefaultMessage: "Drop layers(*.KML) here to upload",
     timeout: 99999,

@@ -116,7 +116,7 @@ function layerMenu(close, speed) {
             layersHeight += $(this).outerHeight();
         });
         $("#layers").animate({
-            height: layersHeight + 30,
+            height: layersHeight + 25,
         }, speed);
     } else {
         $("#layers").animate({

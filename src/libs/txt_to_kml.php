@@ -63,10 +63,13 @@ function convert_to_kml($source_file_path, $output_file) {
     if(!file_exists($source_file_path))
         return 0;
 
-    $lines = file($source_file_path) or die(0);
+    if(!($lines = file($source_file_path)))
+        return 0;
 
-    $myfile = fopen($output_file, "w") or die(0);
-    fwrite($myfile, start_kml_file()) or die(0);
+    if(!($myfile = fopen($output_file, "w")))
+        return 0;
+
+    fwrite($myfile, start_kml_file());
 
     for ($i = 1; $i < count($lines); $i++) {
         $kml_file = "";
@@ -84,10 +87,10 @@ function convert_to_kml($source_file_path, $output_file) {
         }
         $kml_file .= kml_line_end();
 
-        fwrite($myfile, $kml_file) or die(0);
+        fwrite($myfile, $kml_file);
     }
 
-    fwrite($myfile, end_kml_file()) or die(0);
+    fwrite($myfile, end_kml_file());
 
     return 1;
 }
