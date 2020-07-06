@@ -131,9 +131,7 @@ class Layer extends DatabaseObject
     }
 
     public function setDefaultStyle() {
-        $test = array("stroke" => array("color" => "#66ccff", "width" => "2"), "circle" => array("radius" => "4", "fill" => array("color" => "#FFA500")));
-
-        $this->style = json_encode($test);
+        $this->setCustomStyle("#dc143c", 2, "#ffa500", 4);
     }
 
     public function setCustomStyle($strokeColor, $strokeWidth, $circleColor, $circleRadius) {

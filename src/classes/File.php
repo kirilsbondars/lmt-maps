@@ -1,7 +1,7 @@
 <?php
 
 
-class File extends DatabaseObject
+class File
 {
     public $temp_file, $target_file, $name, $type;
 
@@ -9,9 +9,9 @@ class File extends DatabaseObject
         if (!empty($_FILES)) {
             $file = new File();
             $file->temp_file = $_FILES[$upload_name]['tmp_name'];
-            $file->target_file = str_replace('\\', '/',DATA . basename($_FILES[$upload_name]["name"]));
             $file->name = basename($_FILES[$upload_name]["name"]);
-            $file->type = strtolower(pathinfo($file->target_file,PATHINFO_EXTENSION));
+            $file->type = strtolower(pathinfo(basename($_FILES[$upload_name]["name"]),PATHINFO_EXTENSION));
+            $file->target_file = str_replace('\\', '/',DATA . generate_unique_filename(DATA) . "." . $file->type);
 
             return $file;
         } else {
@@ -38,5 +38,11 @@ class File extends DatabaseObject
 
     public static function rename($path, $new_path) {
         echo rename($path, $new_path);
+    }
+
+    public function covert_to_kml() {
+        $new_path = str_replace('\\', '/',DATA . generate_unique_filename(DATA) . ".kml");
+
+        //convert_to_kml($this->target_file,)
     }
 }
