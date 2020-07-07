@@ -1,13 +1,8 @@
-// var style = new Style({
-//     fill: new Fill({
-//         color: 'rgba(255, 255, 255, 0.6)'
-//     }),
-//     stroke: new Stroke({
-//         color: '#FFFFFF',
-//         width: 10
-//     })
-// });
-
+//override defaults for alertifyjs
+alertify.defaults.transition = "slide";
+alertify.defaults.theme.ok = "btn btn-primary";
+alertify.defaults.theme.cancel = "btn btn-danger";
+alertify.defaults.theme.input = "form-control";
 
 $(window).on('load', function() {
     mapShow();
@@ -127,5 +122,20 @@ function closeLayerMenu(close, speed) {
         rotate("#menuCheckBox i", 0, 1000);
     }
 }
+
+// AlertifyJS confirm delete // make check if file is deleted
+$('.delete').on('click', function () {
+    let id = $(this).data("id");
+    let name = $(this).data("name");
+    console.log(id);
+
+    alertify.confirm('Confirm delete', 'Do you want to delete layer <b><em>"' + name + '"</em></b> (id=' + id +')' + '?',
+        function(){
+            $.get('layers/delete.php?id=' + id, function (data, status) {
+                alertify.success('<b><em>' + name + '</em></b> (id=' + id + ') has been deleted', 3);
+            })
+        },
+        function(){});
+})
 
 
