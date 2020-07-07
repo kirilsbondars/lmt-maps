@@ -69,13 +69,31 @@ function getLayerByIDPrintInTable(id) {
     });
 }
 
-// DropZone settings
-Dropzone.options.fileUpload = {
+// DropZone KML files settings
+Dropzone.options.fileUploadKML = {
     paramName: "fileToUpload",
     Filesize: 200,
-    acceptedFiles:".kml, .txt",
+    acceptedFiles:".kml",
     parallelUploads: 1,
-    dictDefaultMessage: "Drop layers(*.KML) here to upload",
+    dictDefaultMessage: "Drop layer(s) (*.KML) here to upload",
+    timeout: 99999,
+    init: function(){
+        let myDropzone = this;
+
+        this.on("success", function (file, response) {
+            myDropzone.removeFile(file);
+            getLayerByIDPrintInTable(response);
+        })
+    },
+};
+
+// DropZone TXT files settings
+Dropzone.options.fileUploadTXT = {
+    paramName: "fileToUpload",
+    Filesize: 200,
+    acceptedFiles:".txt",
+    parallelUploads: 1,
+    dictDefaultMessage: "Drop layer(s) (*.TXT) here to upload, it will be automatically converted to KML",
     timeout: 99999,
     init: function(){
         let myDropzone = this;

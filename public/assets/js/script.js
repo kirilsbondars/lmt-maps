@@ -88,12 +88,11 @@ $(document).on('click','#choice_layers input:checkbox',function(){
 })
 
 $("#menuCheckBox input").change(function () {
+    console.log($(this).prop("checked"));
     if($(this).prop("checked")) {
-        rotate("#menuCheckBox img", 180);
-        layerMenu(true, 1000);
+        closeLayerMenu(true, 1000);
     } else {
-        rotate("#menuCheckBox img", 0);
-        layerMenu(false, 1000);
+        closeLayerMenu(false, 1000);
     }
 })
 
@@ -108,7 +107,7 @@ function rotate(element, degree, duration) {
     });
 }
 
-function layerMenu(close, speed) {
+function closeLayerMenu(close, speed) {
     if(close) {
         let layersHeight = 0;
 
@@ -118,10 +117,14 @@ function layerMenu(close, speed) {
         $("#layers").animate({
             height: layersHeight + 25,
         }, speed);
+
+        rotate("#menuCheckBox i", 180, 1000);
     } else {
         $("#layers").animate({
             height: $( document ).height() - 20,
         }, speed);
+
+        rotate("#menuCheckBox i", 0, 1000);
     }
 }
 

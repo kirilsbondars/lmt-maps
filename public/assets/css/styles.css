@@ -13,21 +13,40 @@
     width: 300px;
     height: calc(100% - 20px);
     border: 1px solid #000000;
-    text-align: center;
     background-color: white;
     border-radius: 8px;
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 #choice_layers {
-    max-height: calc(100% - 120px);
-    overflow: auto;
+    max-height: calc(100% - 110px);
+    width: 100%;
+    text-align: left;
+}
+
+#choice_layers .form-check {
+    height: 24px;
+}
+
+#choice_layers label {
+    white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+}
+
+#layersManager {
+    position: absolute;
+    left: 0;
+    bottom: 27px;
+    width: 100%;
 }
 
 #layersManagerButton {
     width: calc(100% - 20px);
-    position: absolute;
-    left: 10px;
-    bottom: 40px;
 }
 
 #menuButton {
@@ -40,26 +59,27 @@
     outline:none;
     position: absolute;
     left: calc(50% - 15px);
-    bottom: -2px;
+    bottom: 0;
 }
 
 #menuCheckBox {
     position: absolute;
     bottom: 0;
-    left: calc(50% - 15px);
+    left: 0;
+    width: 100%;
 }
 
 #menuCheckBox label {
     cursor: pointer;
+    margin-bottom: 0;
 }
 
 #menuCheckBox input {
     display: none;
 }
 
-#menuCheckBox img {
-    height: 30px;
-    width: 30px;
+#menuCheckBox i {
+    font-size: 24px;
 }
 
 /*.custom-zoom{*/
