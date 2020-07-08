@@ -6,7 +6,7 @@ alertify.defaults.theme.input = "form-control";
 
 $(window).on('load', function() {
     mapShow();
-    updateLayersList();
+    //updateLayersList();
 });
 
 let layers = {}, map;
@@ -33,7 +33,7 @@ function mapShow() {
 
 function updateLayersList() {
     $.post("./layers/get_files_names_checkbox.php", function (data) {
-        $("#choice_layers").html(data);
+        $("#layersTable tbody").html(data);
     });
 }
 
@@ -132,7 +132,12 @@ $('.delete').on('click', function () {
     alertify.confirm('Confirm delete', 'Do you want to delete layer <b><em>"' + name + '"</em></b> (id=' + id +')' + '?',
         function(){
             $.get('layers/delete.php?id=' + id, function (data, status) {
-                alertify.success('<b><em>' + name + '</em></b> (id=' + id + ') has been deleted', 3);
+                console.log(data);
+                if(!data) {
+                    alertify.success('<b><em>' + name + '</em></b> (id=' + id + ') has been deleted', 3);
+                } else {
+                    alertify.error('<b><em>' + name + '</em></b> (id=' + id + ') has not been deleted', 3);
+                }
             })
         },
         function(){});

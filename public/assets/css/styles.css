@@ -52,7 +52,7 @@
 #menuButton {
     font-size: 24px;
     background-color: Transparent;
-    background-repeat:no-repeat;
+    background-repeat: no-repeat;
     border: none;
     cursor:pointer;
     overflow: hidden;
@@ -80,6 +80,17 @@
 
 #menuCheckBox i {
     font-size: 24px;
+}
+
+/*table*/
+
+#layersTable td {
+    padding: 0;
+    vertical-align: middle;
+}
+
+.btn-xs {
+    padding: 0 4px;
 }
 
 /*.custom-zoom{*/

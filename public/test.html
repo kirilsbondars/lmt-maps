@@ -18,46 +18,31 @@
     <link rel="stylesheet" href="assets/alertifyjs/css/alertify.min.css">
     <link rel="stylesheet" href="assets/alertifyjs/css/themes/bootstrap.min.css">
     <!-- My CSS -->
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="test.css">
 </head>
 <body>
-
-    <div id="map" class="map"></div>
-
-    <div id="layers">
-        <h5>Choose files to display:</h5>
-<!--        <div id="choice_layers"></div>-->
-        <table class="table table-hover" id="layersTable">
-            <tbody>
-                <tr>
-                    <td style="width: 25px">
-                        <input type="checkbox" data-id="<?php echo $id?>"/>
-                    </td>
-                    <td style="text-align: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">fbbfbfbfbfbffbfbfbfbfbfbfbfbfbghhfhffhf</td>
-                    <td style="width: 40px">
-                        <button class="btn edit" data-id="<?php echo $id?>" data-name="<?php echo $name?>">
-                            <div class="row">
-                                <div class="m-1"><div style="width: 5px; height: 15px; background-color: #0000ff"></div></div>
-                                <div class="mt-1 mb-1 mr-1"><div style="width: 15px; height: 15px; background-color: #8B0000; border-radius: 15px"></div></div>
-                            </div>
-                        </button>
-                    </td>
-                    <td style="width: 20px">
-                        <button class="btn btn-sm delete" data-id="<?php echo $id?>" data-name="<?php echo $name?>"><i class="fa fa-times" aria-hidden="true"></i></button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-        <div id="layersManager">
-            <a href="layers-control.html" class="btn btn-primary" id="layersManagerButton">Layers manager</a>
-        </div>
-
-        <div id="menuCheckBox">
-            <input type="checkbox" id="myCheckbox" />
-            <label for="myCheckbox"><i class="fa fa-angle-down" aria-hidden="true"></i></label>
-        </div>
-    </div>
+    <table class="table table-hover">
+        <tbody>
+            <tr>
+                <td class="first">
+                    <input type="checkbox" data-id="1"/>
+                </td>
+                <td class="second">Otto</td>
+                <td class="third">
+                    <div style="display: table">
+                        <div style="width: 5px; height: 10px; background-color: #0000ff; display: table-cell; margin: 10px"></div>
+                        <div style="width: 15px; height: 15px; background-color: #8B0000; border-radius: 15px; display: table-cell;"></div>
+                    </div>
+                </td>
+                <td class="forth">
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <button class="btn btn-secondary edit" data-id="1" data-name="1"><i class="fa fa-edit" aria-hidden="true"></i></button>
+                        <button class="btn btn-secondary delete" data-id="1" data-name="1"><i class="fa fa-times" aria-hidden="true"></i></button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
     <!-- OpenLayers -->
     <script src="assets/ol/ol.js"></script>
