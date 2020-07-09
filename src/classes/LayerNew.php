@@ -55,7 +55,7 @@ class LayerNew
         return $object;
     }
 
-    public function create() {
+    protected function create() {
         $attributes = $this->sanitized_attributes();
         $sql = "INSERT INTO layer (";
         $sql .= join(', ', array_keys($attributes));
@@ -69,19 +69,28 @@ class LayerNew
         return $result;
     }
 
-    public function update($args=[]) {
+    protected function update($args=[]) {
         $attributes = $this->sanitized_attributes();
         $attributes_pairs = [];
         foreach($attributes as $key => $value) {
             $attributes_pairs[] = "{$key}='{$value}'";
         }
 
-        $sql = "UPDATE layer SET";
+        $sql = "UPDATE layer SET ";
         $sql .= join(', ', $attributes_pairs);
         $sql .= " WHERE id='" . self::$database->escape_string($this->id) . "' ";
         $sql .= "LIMIT 1";
         $result = self::$database->query($sql);
         return $result;
+    }
+
+    public function save() {
+        // A new record will not have an ID yet
+        if(isset($this->id)) {
+            return $this->update();
+        } else {
+            return $this->create();
+        }
     }
 
     public function merge_attributes($args=[]) {
@@ -116,7 +125,6 @@ class LayerNew
 
     public function __construct($args=[])
     {
-        $this->id = $args['id'] ?? '';
         $this->name = $args['name'] ?? '';
         $this->path = $args['path'] ?? '';
         $this->style = $args['style'] ?? '';
