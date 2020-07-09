@@ -6,7 +6,11 @@ alertify.defaults.theme.input = "form-control";
 
 $(window).on('load', function() {
     mapShow();
-    //updateLayersList();
+    updateLayersTable();
+
+    $(document).on ("click", ".delete", function () {
+        deleteLayer(this);
+    });
 });
 
 let layers = {}, map;
@@ -21,7 +25,7 @@ function mapShow() {
         target: 'map',
         layers: [layer_map],
         view: new ol.View({
-            center: ol.proj.fromLonLat([24.6032, 56.8796]),
+            center: ol.proj.fromLonLat([22.8, 56.9]),
             zoom: 7
         })
     });
@@ -31,17 +35,18 @@ function mapShow() {
     // }));
 }
 
-function updateLayersList() {
+function updateLayersTable() {
     $.post("./layers/get_files_names_checkbox.php", function (data) {
         $("#layersTable tbody").html(data);
     });
 }
 
-$(document).on('click','#choice_layers input:checkbox',function(){
-    let id = $(this).val();
+$(document).on('click','.checkboxLayer',function(){
     let style;
+    let id = $(this).data("id");
+    let checked = $(this).prop("checked");
 
-    console.log($(this).val() + " " + $(this).prop("checked"));
+    console.log(id + " " + checked);
 
     $.ajax({
         url : "./layers/get_layer_style.php?id=" + id,
@@ -52,11 +57,11 @@ $(document).on('click','#choice_layers input:checkbox',function(){
         }
     });
 
-    if ($(this).prop("checked")) {
+    if (checked) {
         if (layers[$(this).val()] === undefined) {
             layers[$(this).val()] = new ol.layer.Vector({
                 source: new ol.source.Vector({
-                    url: './layers/get_layer.php?file=' + $(this).val(),
+                    url: './layers/get_layer.php?id=' + id,
                     format: new ol.format.KML({
                         extractStyles: false
                     })
@@ -124,9 +129,9 @@ function closeLayerMenu(close, speed) {
 }
 
 // AlertifyJS confirm delete // make check if file is deleted
-$('.delete').on('click', function () {
-    let id = $(this).data("id");
-    let name = $(this).data("name");
+function deleteLayer (layer) {
+    let id = $(layer).data("id");
+    let name = $(layer).data("name");
     console.log(id);
 
     alertify.confirm('Confirm delete', 'Do you want to delete layer <b><em>"' + name + '"</em></b> (id=' + id +')' + '?',
@@ -135,12 +140,13 @@ $('.delete').on('click', function () {
                 console.log(data);
                 if(!data) {
                     alertify.success('<b><em>' + name + '</em></b> (id=' + id + ') has been deleted', 3);
+                    $(layer).parents("tr").addClass("table-danger").hide(500);
                 } else {
                     alertify.error('<b><em>' + name + '</em></b> (id=' + id + ') has not been deleted', 3);
                 }
             })
         },
         function(){});
-})
+}
 
 

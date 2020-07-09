@@ -1,8 +1,8 @@
 <?php
 require_once("../../src/initialize.php");
 
-check_GET_var("file");
-$id = $_GET["file"];
+check_GET_var("id");
+$id = $_GET["id"];
 
 $file_path = Layer::getPath($id);
 

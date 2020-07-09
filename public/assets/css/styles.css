@@ -38,17 +38,16 @@
     display: inline-block;
 }
 
+/*Layers manager button*/
 #layersManager {
     position: absolute;
     left: 0;
     bottom: 27px;
     width: 100%;
 }
-
 #layersManagerButton {
     width: calc(100% - 20px);
 }
-
 #menuButton {
     font-size: 24px;
     background-color: Transparent;
@@ -62,35 +61,93 @@
     bottom: 0;
 }
 
+/*Add layer button*/
+#addLayer {
+    position: absolute;
+    left: 0;
+    bottom: 65px;
+    width: calc(100% - 20px);
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+/*Button for small/big layers panel*/
 #menuCheckBox {
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
 }
-
 #menuCheckBox label {
     cursor: pointer;
     margin-bottom: 0;
 }
-
 #menuCheckBox input {
     display: none;
 }
-
 #menuCheckBox i {
     font-size: 24px;
 }
 
 /*table*/
 
+#layersTable {
+    table-layout: fixed;
+    width: 100%;
+    white-space: nowrap;
+}
 #layersTable td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 40px;
     padding: 0;
     vertical-align: middle;
 }
 
-.btn-xs {
+.first {
+    width: 20px;
+    text-align: left;
+}
+.second {
+    text-align: left;
+}
+.third {
+    width: 34px;
+    align-items: center;
+}
+.forth {
+    width: 49px;
+    text-align: center;
+}
+
+.checkboxLayer {
+    margin-left: 3px;
+}
+
+.delete {
     padding: 0 4px;
+    border: none;
+}
+.delete:hover {
+    background-color: #a92222;
+    color: white;
+}
+.delete:focus {
+    box-shadow: none;
+}
+
+.edit {
+    padding: 0 4px;
+    border: none;
+}
+.edit:hover {
+    background-color: #00cc66;
+    color: white;
+}
+.edit:focus {
+    box-shadow: none;
 }
 
 /*.custom-zoom{*/

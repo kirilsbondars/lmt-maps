@@ -12,6 +12,7 @@ foreach (glob(SRC . "classes/*.php") as $filename) {
 
 $database = db_connect();
 DatabaseObject::set_database($database);
+LayerNew::set_database($database);
 
 if(!file_exists(DATA)) {
     mkdir(DATA);
