@@ -12,15 +12,29 @@ include_once("../src/initialize.php");
 //echo $layer->type();
 //
 $args = [];
-$args['name'] = "Katya's name";
-$args['path'] = 'some path';
-$args['style'] = '{"color" : "rainbow"}';
+$args['name'] = "changed info";
+$args['path'] = 'changed';
+$args['style'] = '{"color" : "change"}';
 
-$layer = new LayerNew($args);
-$result = $layer->create();
+// Create
+//$layer = new LayerNew($args);
+//$result = $layer->create();
+//
+//if($result) {
+//    echo $layer->id . " " . $layer->name . " " . $layer->path . " " . $layer->style;
+//} else {
+//    //show errors
+//}
 
-if($result) {
-    echo $layer->id . " " . $layer->name . " " . $layer->path . " " . $layer->style;
-} else {
-    //show errors
+// Update
+$layers = LayerNew::find_by_id(1);
+if($layers == false) {
+    echo "error no id";
+}
+
+$layers->merge_attributes($args);
+$result = $layers->update();
+
+if($result == true) {
+    echo "layer updated";
 }
