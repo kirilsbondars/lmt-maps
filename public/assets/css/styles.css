@@ -1,3 +1,4 @@
+/*Map*/
 .map {
     position: fixed;
     height: 100%;
@@ -5,7 +6,17 @@
     bottom: 0;
     right: 0;
 }
+/*Zoom buttons*/
+.custom-zoom{
+    top: .5em;
+    right: .5em;
+}
+.custom-zoom button{
+    background-color: rgba(40, 40, 40, .7);
+    border-radius: 50%;
+}
 
+/*Layers manager*/
 #layers {
     position: fixed;
     top: 10px;
@@ -19,17 +30,14 @@
     padding-left: 10px;
     padding-right: 10px;
 }
-
 #choice_layers {
     max-height: calc(100% - 110px);
     width: 100%;
     text-align: left;
 }
-
 #choice_layers .form-check {
     height: 24px;
 }
-
 #choice_layers label {
     white-space: nowrap;
     width: 100%;
@@ -91,7 +99,6 @@
 }
 
 /*table*/
-
 #layersTable {
     table-layout: fixed;
     width: 100%;
@@ -118,7 +125,7 @@
     align-items: center;
 }
 .forth {
-    width: 49px;
+    width: 70px;
     text-align: center;
 }
 
@@ -126,36 +133,23 @@
     margin-left: 3px;
 }
 
-.delete {
+.actions {
     padding: 0 4px;
     border: none;
 }
+.actions:focus {
+    box-shadow: none;
+}
+
 .delete:hover {
     background-color: #a92222;
     color: white;
 }
-.delete:focus {
-    box-shadow: none;
-}
-
-.edit {
-    padding: 0 4px;
-    border: none;
+.download:hover {
+    background-color: #0000FF;
+    color: white;
 }
 .edit:hover {
     background-color: #00cc66;
     color: white;
 }
-.edit:focus {
-    box-shadow: none;
-}
-
-/*.custom-zoom{*/
-/*    top: .5em;*/
-/*    right: .5em;*/
-/*}*/
-/*.custom-zoom button{*/
-/*    background-color: rgba(40, 40, 40, .7);*/
-/*    border-radius: 50%;*/
-/*}*/
-

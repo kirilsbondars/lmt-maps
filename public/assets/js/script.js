@@ -4,6 +4,7 @@ alertify.defaults.theme.ok = "btn btn-primary";
 alertify.defaults.theme.cancel = "btn btn-danger";
 alertify.defaults.theme.input = "form-control";
 
+// Actions after page is load
 $(window).on('load', function() {
     mapShow();
     updateLayersTable();
@@ -15,6 +16,7 @@ $(window).on('load', function() {
 
 let layers = {}, map;
 
+// Map
 function mapShow() {
     let layer_map = new ol.layer.Tile({
         source: new ol.source.OSM()
@@ -30,17 +32,19 @@ function mapShow() {
         })
     });
 
-    // map.addControl(new ol.control.Zoom({
-    //     className: 'custom-zoom'
-    // }));
+    map.addControl(new ol.control.Zoom({
+        className: 'custom-zoom'
+    }));
 }
 
+// Get layers to the table
 function updateLayersTable() {
-    $.post("./layers/get_files_names_checkbox.php", function (data) {
+    $.post("./layers/get_table.php", function (data) {
         $("#layersTable tbody").html(data);
     });
 }
 
+// Show layer on the map
 $(document).on('click','.checkboxLayer',function(){
     let style;
     let id = $(this).data("id");
@@ -58,8 +62,8 @@ $(document).on('click','.checkboxLayer',function(){
     });
 
     if (checked) {
-        if (layers[$(this).val()] === undefined) {
-            layers[$(this).val()] = new ol.layer.Vector({
+        if (layers[id] === undefined) {
+            layers[id] = new ol.layer.Vector({
                 source: new ol.source.Vector({
                     url: './layers/get_layer.php?id=' + id,
                     format: new ol.format.KML({
@@ -81,12 +85,13 @@ $(document).on('click','.checkboxLayer',function(){
             });
         }
 
-        map.addLayer(layers[$(this).val()]);
+        map.addLayer(layers[id]);
     } else {
-        map.removeLayer(layers[$(this).val()]);
+        map.removeLayer(layers[id]);
     }
 })
 
+// Layers menu small/big changer
 $("#menuCheckBox input").change(function () {
     console.log($(this).prop("checked"));
     if($(this).prop("checked")) {
@@ -95,7 +100,6 @@ $("#menuCheckBox input").change(function () {
         closeLayerMenu(false, 1000);
     }
 })
-
 function rotate(element, degree, duration) {
     $(element).animate({deg: degree}, {
         duration: duration,
@@ -106,7 +110,6 @@ function rotate(element, degree, duration) {
         }
     });
 }
-
 function closeLayerMenu(close, speed) {
     if(close) {
         let layersHeight = 0;
@@ -128,8 +131,8 @@ function closeLayerMenu(close, speed) {
     }
 }
 
-// AlertifyJS confirm delete // make check if file is deleted
-function deleteLayer (layer) {
+// Delete action button
+function deleteLayer(layer) {
     let id = $(layer).data("id");
     let name = $(layer).data("name");
     console.log(id);
@@ -138,7 +141,7 @@ function deleteLayer (layer) {
         function(){
             $.get('layers/delete.php?id=' + id, function (data, status) {
                 console.log(data);
-                if(!data) {
+                if(data == true) {
                     alertify.success('<b><em>' + name + '</em></b> (id=' + id + ') has been deleted', 3);
                     $(layer).parents("tr").addClass("table-danger").hide(500);
                 } else {
@@ -148,5 +151,6 @@ function deleteLayer (layer) {
         },
         function(){});
 }
+
 
 

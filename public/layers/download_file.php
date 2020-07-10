@@ -1,19 +1,26 @@
 <?php
 include_once ("../../src/initialize.php");
 
-check_GET_var("id");
+if(!isset($_GET['id'])) {
+    exit("Error: no ID inputted");
+}
 $id = $_GET["id"];
 
-$file = Layer::getPath($id);
+$layer = Layer::find_by_id($id);
+if($layer == false) {
+    exit("Error: no such ID in DB");
+}
 
-if (file_exists($file)) {
+$path = $layer->path;
+
+if (file_exists($path)) {
     header('Content-Description: File Transfer');
     header('Content-Type: application/octet-stream');
-    header('Content-Disposition: attachment; filename="'.basename($file).'"');
+    header('Content-Disposition: attachment; filename="' . $layer->full_name() . '"'); //basename($path)
     header('Expires: 0');
     header('Cache-Control: must-revalidate');
     header('Pragma: public');
-    header('Content-Length: ' . filesize($file));
-    readfile($file);
+    header('Content-Length: ' . filesize($path));
+    readfile($path);
     exit;
 }

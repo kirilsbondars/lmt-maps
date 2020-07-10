@@ -1,15 +1,24 @@
 <?php
 require_once("../../src/initialize.php");
 
+if(!isset($_GET['id'])) {
+    exit("Error: no ID inputted");
+}
 $id = $_GET["id"];
 
-$layer = Layer::initialiseID($id);
-
-if(empty($layer)) {
-    exit();
+$layer = Layer::find_by_id($id);
+if($layer == false) {
+    exit("Error: no such ID in DB");
 }
 
-if(file_exists($layer->target_file)) {
-    unlink($layer->target_file);
+$result = $layer->delete();
+if($result == false) {
+    exit("Error: file was not deleted from DB");
 }
-$layer->delete_from_db();
+
+if(file_exists($layer->path) == false) {
+    exit("Error: file with this path doesn't exist");
+}
+unlink($layer->path);
+
+echo true;

@@ -9,7 +9,7 @@ class File
         if (!empty($_FILES)) {
             $file = new File();
             $file->temp_file = $_FILES[$upload_name]['tmp_name'];
-            $file->name = basename($_FILES[$upload_name]["name"]);
+            $file->name = pathinfo(basename($_FILES[$upload_name]["name"]), PATHINFO_FILENAME);
             $file->type = strtolower(pathinfo(basename($_FILES[$upload_name]["name"]),PATHINFO_EXTENSION));
             $file->target_file = str_replace('\\', '/',DATA . generate_unique_filename(DATA) . "." . $file->type);
 

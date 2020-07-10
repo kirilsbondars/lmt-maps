@@ -17,6 +17,8 @@
     <!--  AlertifyJS  -->
     <link rel="stylesheet" href="assets/alertifyjs/css/alertify.min.css">
     <link rel="stylesheet" href="assets/alertifyjs/css/themes/bootstrap.min.css">
+    <!-- DropZone -->
+    <link rel="stylesheet" href="./assets/dropzonejs/dropzone.css">
     <!-- My CSS -->
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
@@ -44,7 +46,7 @@
         </div>
     </div>
 
-    <!--  Modal edit layer  -->
+    <!--  Modal for editing layer  -->
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -96,6 +98,27 @@
         </div>
     </div>
 
+    <!--  Modal for adding new layer(s)  -->
+    <div class="modal fade" id="newLayer" tabindex="-1" role="dialog" aria-labelledby="newLayerLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="newLayerLabel">Add new layer(s)</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- OpenLayers -->
     <script src="assets/ol/ol.js"></script>
     <!-- jQuery-->
@@ -105,6 +128,10 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <!--  AlertifyJS  -->
     <script src="assets/alertifyjs/alertify.min.js"></script>
+    <!-- DropZone -->
+    <script src="./assets/dropzonejs/dropzone.js"></script>
+    <!-- formToJSON -->
+    <script src="assets/formToJSON/formToJson.min.js"></script>
     <!-- My JS -->
     <script src="assets/js/script.js"></script>
 </body>

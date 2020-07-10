@@ -49,3 +49,8 @@ function generate_unique_filename($path) {
 
     return $random_filename;
 }
+
+function random_element_from_array($arr) {
+    $rand_index = rand(0, count($arr) - 1);
+    return $arr[$rand_index];
+}
