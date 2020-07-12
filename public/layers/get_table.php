@@ -2,13 +2,13 @@
 require_once("../../src/initialize.php");
 
 if(!isset($_GET['id'])) {
-    error_exit("Error: no inputted ID");
+    exit("Error: no inputted ID");
 }
 $id = $_GET["id"];
 
 $layer = Layer::find_by_id($id);
 if($layer == false) {
-    error_exit("Error: no such ID in DB");
+    exit("Error: no such ID in DB");
 }
 
 $id = $layer->id;

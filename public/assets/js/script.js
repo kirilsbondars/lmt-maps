@@ -46,7 +46,7 @@ $(document).on('click','.checkboxLayer',function(){
     console.log(id + " " + checked);
 
     $.ajax({
-        url : "./layers/get_layer_style.php?id=" + id,
+        url : "layers/get_layer_style.php?id=" + id,
         type : "get",
         async: false,
         success : function (data, status) {
@@ -147,14 +147,26 @@ function deleteLayer(layer) {
 
 // Get layers to the table
 function updateLayersTable() {
-    $.post("./layers/get_all_table.php", function (data) {
+    let url = "layers/get_all_table.php";
+
+    $.get(url, function (data) {
         $("#layersTable tbody").html(data);
     });
+
+    // var xhr = new XMLHttpRequest();
+    // xhr.open('GET', url, true);
+    // xhr.onreadystatechange = function () {
+    //     if(xhr.readyState == 4 && xhr.status == 200) {
+    //         let data = xhr.responseText;
+    //         $("#layersTable tbody").html(data);
+    //     }
+    // }
+    // xhr.send();
 }
 
 //Get layer in row for table
 function getLayerRow(id) {
-    $.get("./layers/get_table.php?id="+id, function (data, status) {
+    $.get("layers/get_table.php?id="+id, function (data, status) {
         $("#layersTable tbody").append(data);
     })
 }
@@ -163,9 +175,9 @@ function getLayerRow(id) {
 Dropzone.options.fileUploadKML = {
     paramName: "fileToUpload",
     Filesize: 200,
-    acceptedFiles:".kml",
+    acceptedFiles:".kml, .txt",
     parallelUploads: 1,
-    dictDefaultMessage: "Drop layer(s) (*.KML) here to upload",
+    dictDefaultMessage: "Drop layer(s) in KML and TXT(custom lmt format) here to upload",
     timeout: 99999,
     init: function(){
         let myDropzone = this;
@@ -174,21 +186,9 @@ Dropzone.options.fileUploadKML = {
             myDropzone.removeFile(file);
             getLayerRow(response);
         })
-    },
-};
-// DropZone TXT files settings
-Dropzone.options.fileUploadTXT = {
-    paramName: "fileToUpload",
-    Filesize: 200,
-    acceptedFiles:".txt",
-    parallelUploads: 1,
-    dictDefaultMessage: "Drop layer(s) in custom TXT (LMT special format) here to upload, it will be automatically converted to KML",
-    timeout: 99999,
-    init: function(){
-        let myDropzone = this;
 
-        this.on("success", function (file, response) {
-            myDropzone.removeFile(file);
+        this.on("error", function (file, response) {
+            console.log(response);
         })
     },
 };
