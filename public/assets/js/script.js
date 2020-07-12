@@ -167,7 +167,10 @@ function updateLayersTable() {
 //Get layer in row for table
 function getLayerRow(id) {
     $.get("layers/get_table.php?id="+id, function (data, status) {
-        $("#layersTable tbody").append(data);
+        let row = $(data);
+        row.hide().addClass("table-success").show(2000)
+        setTimeout(function() { row.removeClass("table-success") }, 3000 );
+        $("#layersTable tbody").append(row);
     })
 }
 
