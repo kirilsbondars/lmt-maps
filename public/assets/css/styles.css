@@ -138,6 +138,7 @@
     border: none;
 }
 .actions:focus {
+    outline: none;
     box-shadow: none;
 }
 

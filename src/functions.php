@@ -54,3 +54,15 @@ function random_element_from_array($arr) {
     $rand_index = rand(0, count($arr) - 1);
     return $arr[$rand_index];
 }
+
+function error_exit($description) {
+    exit(output(false, $description));
+}
+
+function success_output($description) {
+    return output(true, $description);
+}
+
+function output($success, $description) {
+    return json_encode(array("success" => $success, "description" => $description));
+}

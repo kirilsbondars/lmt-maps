@@ -20,8 +20,4 @@ $args["path"] = $file->target_file;
 $layer = new Layer($args);
 $result = $layer->save();
 
-if($result) {
-    echo $layer->id . " " . $layer->name . " " . $layer->path . " " . $layer->style;
-} else {
-    echo json_encode($layer->errors);
-}
+echo $layer->id;

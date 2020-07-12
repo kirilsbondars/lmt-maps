@@ -37,13 +37,6 @@ function mapShow() {
     }));
 }
 
-// Get layers to the table
-function updateLayersTable() {
-    $.post("./layers/get_table.php", function (data) {
-        $("#layersTable tbody").html(data);
-    });
-}
-
 // Show layer on the map
 $(document).on('click','.checkboxLayer',function(){
     let style;
@@ -151,6 +144,54 @@ function deleteLayer(layer) {
         },
         function(){});
 }
+
+// Get layers to the table
+function updateLayersTable() {
+    $.post("./layers/get_all_table.php", function (data) {
+        $("#layersTable tbody").html(data);
+    });
+}
+
+//Get layer in row for table
+function getLayerRow(id) {
+    $.get("./layers/get_table.php?id="+id, function (data, status) {
+        $("#layersTable tbody").append(data);
+    })
+}
+
+// DropZone KML files settings
+Dropzone.options.fileUploadKML = {
+    paramName: "fileToUpload",
+    Filesize: 200,
+    acceptedFiles:".kml",
+    parallelUploads: 1,
+    dictDefaultMessage: "Drop layer(s) (*.KML) here to upload",
+    timeout: 99999,
+    init: function(){
+        let myDropzone = this;
+
+        this.on("success", function (file, response) {
+            myDropzone.removeFile(file);
+            getLayerRow(response);
+        })
+    },
+};
+// DropZone TXT files settings
+Dropzone.options.fileUploadTXT = {
+    paramName: "fileToUpload",
+    Filesize: 200,
+    acceptedFiles:".txt",
+    parallelUploads: 1,
+    dictDefaultMessage: "Drop layer(s) in custom TXT (LMT special format) here to upload, it will be automatically converted to KML",
+    timeout: 99999,
+    init: function(){
+        let myDropzone = this;
+
+        this.on("success", function (file, response) {
+            myDropzone.removeFile(file);
+        })
+    },
+};
 
 
 
