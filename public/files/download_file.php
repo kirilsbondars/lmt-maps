@@ -1,5 +1,5 @@
 <?php
-include_once ("../../src/initialize.php");
+include_once("../../src/initialize.php");
 
 if(!isset($_GET['id'])) {
     exit("Error: no ID inputted");

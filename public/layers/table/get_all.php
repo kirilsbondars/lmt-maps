@@ -1,5 +1,5 @@
 <?php
-require_once("../../src/initialize.php");
+require_once("../../../src/initialize.php");
 
 $layers = Layer::find_all();
 
@@ -13,5 +13,5 @@ foreach ($layers as $layer) {
     $strokeColor = $style["stroke"]["color"];
     $circleColor = $style["circle"]["fill"]["color"];
 
-    include "layer_row.php";
+    include "table_row.php";
 }

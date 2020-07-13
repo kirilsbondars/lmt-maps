@@ -1,5 +1,5 @@
 <?php
-require_once("../../src/initialize.php");
+require_once("../../../src/initialize.php");
 
 if(!isset($_GET['id'])) {
     exit("Error: no inputted ID");
@@ -17,4 +17,4 @@ $style = json_decode($layer->style, true);
 $strokeColor = $style["stroke"]["color"];
 $circleColor = $style["circle"]["fill"]["color"];
 
-include "layer_row.php";
+include "table_row.php";
