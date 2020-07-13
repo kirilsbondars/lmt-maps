@@ -1,4 +1,4 @@
-<tr>
+<tr id="<?php echo $id?>">
     <td class="first">
         <input type="checkbox" data-id="<?php echo $id?>" class="checkboxLayer" title="Check to display layer"/>
     </td>

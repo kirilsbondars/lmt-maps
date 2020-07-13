@@ -12,6 +12,7 @@ if($layer == false) {
 }
 
 $arr = array();
+$arr["id"] = $layer->id;
 $arr["name"] = $layer->name;
 $arr["style"] = $layer->style;
 

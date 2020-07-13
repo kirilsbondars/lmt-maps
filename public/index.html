@@ -30,10 +30,12 @@
     <div id="layers">
         <h5>Choose files to display:</h5>
 
-        <table class="table table-hover" id="layersTable">
-            <tbody>
-            </tbody>
-        </table>
+        <div style="overflow: auto; height: calc(100% - 155px)" >
+            <table class="table table-hover" id="layersTable">
+                <tbody>
+                </tbody>
+            </table>
+        </div>
 
         <button id="addLayer" class="btn btn-success" data-toggle="modal" data-target="#newLayer">Add layer(s)</button>
         <div id="layersManager">

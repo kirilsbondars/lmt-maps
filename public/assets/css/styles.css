@@ -103,6 +103,7 @@
     table-layout: fixed;
     width: 100%;
     white-space: nowrap;
+    margin-bottom: 0;
 }
 #layersTable td {
     white-space: nowrap;
