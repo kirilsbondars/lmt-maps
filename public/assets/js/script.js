@@ -4,26 +4,20 @@ alertify.defaults.theme.ok = "btn btn-primary";
 alertify.defaults.theme.cancel = "btn btn-danger";
 alertify.defaults.theme.input = "form-control";
 
-//var layers_info = {};
-let layers = [], map;
+var layers = [], map;
 
 // Actions after page is load
 $(window).on('load', function() {
-    mapShow();
+    map = mapInitialize();
     updateLayersTable();
-
-    $(document).on("click", ".delete", function () {
-        deleteLayer(this);
-    });
 });
 
-// Map
-function mapShow() {
+// Initialize map
+function mapInitialize() {
     let layer_map = new ol.layer.Tile({
         source: new ol.source.OSM()
     });
-
-    map = new ol.Map({
+    let map = new ol.Map({
         controls: [],
         target: 'map',
         layers: [layer_map],
@@ -32,26 +26,17 @@ function mapShow() {
             zoom: 7
         })
     });
-
     map.addControl(new ol.control.Zoom({
         className: 'custom-zoom'
     }));
+
+    return map;
 }
 
-// Show layer on the map
+// Show/hide layer on checkbox click
 $(document).on('click','.checkboxLayer',function(){
-    let style;
     let id = $(this).data("id");
     let checked = $(this).prop("checked");
-
-    $.ajax({
-        url : "layers/get_style.php?id=" + id,
-        type : "get",
-        async: false,
-        success : function (data, status) {
-            style = JSONToStyle(data);
-        }
-    });
 
     if (checked) {
         if (layers[id] === undefined) {
@@ -62,18 +47,34 @@ $(document).on('click','.checkboxLayer',function(){
                         extractStyles: false
                     })
                 })
-            });
+            })
+            layers[id].set("id", id);
+            console.log("Layer with id " + id + " added to the array")
         }
 
-        layers[id].setStyle(style);
-        layers[id].set("id", id);
-        map.addLayer(layers[id]);
-        console.log("Added layer with id = " + id + " to the map" + checked);
+        displayLayer(id);
+
     } else {
         map.removeLayer(layers[id]);
         console.log("Deleted layer with id = " + id + " to the map" + checked);
     }
 })
+
+// Get style from db and display layer
+function displayLayer(id) {
+    updateStyle(id);
+    map.addLayer(layers[id]);
+    console.log("Added layer with id = " + id + " to the map");
+}
+// Update style
+function updateStyle(id) {
+    let url = "layers/get_style.php";
+    $.post(url, {id: id}, function (data, status) {
+        let style = JSONToStyle(data);
+        layers[id].setStyle(style);
+        console.log("Style of layer with id = " + id + " has been updated");
+    })
+}
 
 //// EDIT MODAL
 // Clear form on close
@@ -145,15 +146,15 @@ $("#layerForm").submit(function (event) {
     event.preventDefault();
 
     let fields = {}; // put form data to the object
-    $("#layerForm").find(":input").each(function() {
+    $(this).find(":input").each(function() {
         fields[this.name] = $(this).val();
     });
-    let style = styleToJSON(fields);
-
     let id = fields.id;
+    let style = styleToJSON(fields);
+    let name = $(this).find("#name").val()
 
     let input = {
-        "name": $("#layerForm").find("#name").val(),
+        "name": name,
         "style": style
     };
 
@@ -166,17 +167,22 @@ $("#layerForm").submit(function (event) {
 
             map.getLayers().forEach(function (layer) {
                 if(layer.get("id") == id) {
-                    layer.setStyle(JSONToStyle(input["style"]));
+                    updateStyle(id);
                 }
             });
+
+            alertify.success("Info about \"<em><b>" + name + "</b></em>\" layer with id = " + id + " <em>has been updated</em>", 3);
+        } else {
+            alertify.error("<b>Error</b> while updating info about \"<em><b>" + name + "</b></em>\" layer with id = " + id, 3);
         }
     })
 })
 
 // Delete button action
-function deleteLayer(layer) {
-    let id = $(layer).data("id");
-    let name = $(layer).data("name");
+$(document).on("click", ".delete", function () {
+    let layer = $(this);
+    let id = layer.data("id");
+    let name = layer.data("name");
 
     alertify.confirm('Confirm delete', 'Do you want to delete layer <b><em>"' + name + '"</em></b> (id=' + id +')' + '?',
         function(){
@@ -199,7 +205,7 @@ function deleteLayer(layer) {
             })
         },
         function(){});
-}
+})
 
 // Get layers to the table
 function updateLayersTable() {
@@ -251,5 +257,82 @@ Dropzone.options.fileUploadKML = {
 };
 
 //// LAYERS MANAGER
+let managerModal = $('#layersManagerModal');
+let output = $("#selectedCheckboxes");
+let selectedLayers = {"id": [], "name" : []};
 
+// Action after opening the module
+managerModal.on('show.bs.modal', function (event) {
+    let modal = $(this);
+    let url = "layers/manager_table/get_all.php";
 
+    $.post(url, function (data, status) {
+        modal.find("tbody").html(data);
+    })
+
+    selectedLayers = {"id": [], "name" : []};
+    managerModal.find(":input").prop("checked", false);
+    updateCheckedNumber();
+})
+
+// Collective select
+managerModal.on("click", ".checkboxAll", function () {
+    let checkbox = $(this);
+    let checkboxes = managerModal.find("input[data-about=layer]");
+
+    if(checkbox.prop("checked")) {
+        checkboxes.prop("checked", "checked");
+    } else {
+        checkboxes.prop("checked", false);
+    }
+})
+
+// Display in #selectedCheckbox how many layers are selected
+function updateCheckedNumber() {
+    let arr = selectedLayers["name"]
+    let checkedNumber = arr.length;
+    let checkedNames = "";
+
+    arr.forEach(function (item, index) {
+        if(index === checkedNumber - 1)
+            checkedNames += item;
+        else
+            checkedNames += item + "; ";
+    })
+
+    output.text(checkedNumber + " layers are checked (" + checkedNames + ")");
+}
+
+function removeItemOnce(arr, value) {
+    var index = arr.indexOf(value);
+    if (index > -1) {
+        arr.splice(index, 1);
+    }
+    return arr;
+}
+
+// Show how many checkboxes are checked
+$(document).on("click","#layersManagerModal input",function(){
+    let checkbox = $(this);
+    let id = checkbox.data("id");
+    let name = checkbox.data("name");
+
+    if(checkbox.prop("checked")) {
+        selectedLayers["id"].push(id);
+        selectedLayers["name"].push(name);
+    } else {
+        removeItemOnce(selectedLayers["id"], id);
+        removeItemOnce(selectedLayers["name"], name)
+    }
+
+    updateCheckedNumber();
+})
+
+// Download selected layers
+function deleteLayers() {
+    let json = JSON.stringify(selectedLayers["id"]);
+
+    $.post("files/download_files.php", {ids: json}, function (data, status) {
+        console.log(data);
+    })
+}

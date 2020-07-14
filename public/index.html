@@ -134,15 +134,28 @@
                 </div>
                 <div class="modal-body">
                     <div style="overflow: auto; height: calc(100% - 155px)" >
-                        <table class="table table-hover" id="layersManagerTable">
-                            <tbody>
-                            </tbody>
-                        </table>
+<!--                        <div style="overflow: auto; height: 800px">-->
+                            <table class="table table-hover table-sm " id="layersManagerTable">
+                                <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col" class="first">
+                                        <input type="checkbox" class="checkboxAll"/>
+                                    </th>
+                                    <th scope="col" class="second">ID</th>
+                                    <th scope="col" class="second">Name</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+<!--                        </div>-->
+                        <snap id="selectedCheckboxes"></snap>
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-success">Download as one file</button>
+                    <button type="button" class="btn btn-danger" onclick="deleteLayers()">Delete</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <!--                    <button type="button" class="btn btn-primary">Save changes</button>-->
                 </div>
             </div>
         </div>

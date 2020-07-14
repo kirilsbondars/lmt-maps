@@ -109,28 +109,28 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    height: 40px;
+    height: 30px;
     padding: 0;
     vertical-align: middle;
 }
 
-.first {
+#layersTable .first {
     width: 20px;
     text-align: left;
 }
-.second {
+#layersTable .second {
     text-align: left;
 }
-.third {
+#layersTable .third {
     width: 34px;
     align-items: center;
 }
-.forth {
+#layersTable .forth {
     width: 70px;
     text-align: center;
 }
 
-.checkboxLayer {
+#layersTable .checkboxLayer {
     margin-left: 3px;
 }
 
@@ -155,3 +155,13 @@
     background-color: #00cc66;
     color: white;
 }
+
+/*Layers manager table*/
+#layersManagerTable .first {
+    width: 30px;
+    text-align: center
+}
+
+/*#layersManagerTable {*/
+/*    margin-bottom: 0;*/
+/*}*/

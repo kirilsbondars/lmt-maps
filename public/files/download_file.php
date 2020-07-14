@@ -15,7 +15,7 @@ $path = $layer->path;
 
 if (file_exists($path)) {
     header('Content-Description: File Transfer');
-    header('Content-Type: application/vnd.google-earth.kml+xml');
+//    header('Content-Type: application/vnd.google-earth.kml+xml');
     header('Content-Disposition: attachment; filename="' . $layer->full_name() . '"'); //basename($path)
     header('Expires: 0');
     header('Cache-Control: must-revalidate');

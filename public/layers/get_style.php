@@ -1,10 +1,10 @@
 <?php
 require_once("../../src/initialize.php");
 
-if(!isset($_GET['id'])) {
+if(!isset($_POST['id'])) {
     exit("Error: no ID inputted");
 }
-$id = $_GET["id"];
+$id = $_POST["id"];
 
 $layer = Layer::find_by_id($id);
 if($layer == false) {

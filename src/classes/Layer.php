@@ -4,9 +4,9 @@
 class Layer extends DatabaseObject
 {
     // ----- START OF ACTIVE RECORD CODE ------
-    static protected $table_name = "layer";
-    static protected $db_columns = ['id', 'name', 'path', 'style'];
-    static protected $colors = ['#FFFFFF', '#FF6633', '#FF33FF', '#FFFF99', '#00B3E6',
+    protected static string $table_name = "layer";
+    protected static array $db_columns = ['id', 'name', 'path', 'style'];
+    protected static array $colors = ['#FF6633', '#FF33FF', '#FFFF99', '#00B3E6',
         '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
         '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A',
         '#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC',

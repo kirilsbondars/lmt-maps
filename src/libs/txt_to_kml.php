@@ -37,7 +37,7 @@ function geo_string_to_array($str) {
 }
 
 function start_kml_file() {
-    return '<?xml version="1.0" encoding="UTF-8"?><kml xmlns="http://www.opengis.net/kml/2.2"> <Document>';
+    return '<?xml version="1.0" encoding="UTF-8"?><kml xmlns="http://www.opengis.net/kml/2.2"><Document>';
 }
 
 function end_kml_file() {
