@@ -16,18 +16,17 @@ include_once("../../src/initialize.php");
 //    echo $layer->path;
 //}
 
-$a = "C:/xampp/htdocs/lmt-maps/src/data/cs8nrs66v84my8sa.kml";
-$b = "C:/xampp/htdocs/lmt-maps/src/data/eoycy4nbrzhfhm2p.kml";
+$a = "C:/wamp64/www/lmt-maps/src/data/aw7dktsi13ix6u0a.kml";
+$b = "C:/wamp64/www/lmt-maps/src/data/n0a76ertwjhcgtni.kml";
 
-function start_kml_file() {
-    return '<?xml version="1.0" encoding="UTF-8"?><kml xmlns="http://www.opengis.net/kml/2.2"> <Document>';
-}
+$file_a = file_get_contents($a) or die("Unable to open file!") ;
+$start_of_placemark =  strpos($file_a, "<Placemark>");
+$end_of_placemark =  strripos($file_a, "</Placemark>") + strlen("</Placemark>");
 
-function end_kml_file() {
-    return '</Document></kml>';
-}
+$myfile = fopen("newfile.txt", "w") or die("Unable to open file!");
+fwrite($myfile, substr($file_a, $start_of_placemark, $end_of_placemark - $start_of_placemark));
 
-$file_a = file_get_contents($a);
+fclose($myfile);
 
 //
 //if (file_exists($path)) {
