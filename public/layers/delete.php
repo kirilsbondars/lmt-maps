@@ -16,9 +16,8 @@ if($result == false) {
     exit("Error: file was not deleted from DB");
 }
 
-if(file_exists($layer->path) == false) {
-    exit("Error: file with this path doesn't exist");
+if(file_exists($layer->path)) {
+    unlink($layer->path);
 }
-unlink($layer->path);
 
 echo true;

@@ -37,26 +37,44 @@ function geo_string_to_array($str) {
 }
 
 function start_kml_file() {
-    return '<?xml version="1.0" encoding="UTF-8"?><kml xmlns="http://www.opengis.net/kml/2.2"><Document>';
+    $str = '<?xml version="1.0" encoding="UTF-8"?>' . "\r\n";
+    $str .= "\t" . '<kml xmlns="http://www.opengis.net/kml/2.2">' . "\r\n";
+    $str .= "\t\t" . '<Document>' . "\r\n";
+
+    return $str;
 }
 
 function end_kml_file() {
-    return '</Document></kml>';
+    $str = "\t" . '</Document>' . "\r\n";
+    $str .= '</kml>';
+
+    return $str;
 }
 
 function kml_make_point($lon, $lat) {
-    $kml =
-        '<Placemark><Point><coordinates>' . $lon . ',' . $lat . '</coordinates></Point></Placemark>';
+    $kml = "\t\t\t" . '<Placemark>' . "\r\n";
+    $kml .= "\t\t\t\t" . '<Point>' . "\r\n";
+    $kml .= "\t\t\t\t\t" . '<coordinates>' . "\r\n";
+    $kml .= $lon . ',' . $lat;
+    $kml .= "\t\t\t\t\t" . '</coordinates>' . "\r\n";
+    $kml .= "\t\t\t\t" . '</Point>' . "\r\n";
+    $kml .= "\t\t\t" . '</Placemark>' . "\r\n";
 
     return $kml;
 }
 
 function kml_line_start() {
-    return '<Placemark><LineString><altitudeMode>clampToGround</altitudeMode><coordinates>';
+    $str = "\t\t\t" . '<Placemark>' . "\r\n";
+    $str .= "\t\t\t\t" . '<LineString>' . '<altitudeMode>clampToGround</altitudeMode>' . '<coordinates>';
+
+    return $str;
 }
 
 function kml_line_end() {
-    return '</coordinates></LineString></Placemark>';
+    $str = '</coordinates>' . '</LineString>' . "\r\n";
+    $str .= "\t\t\t" . '</Placemark>' . "\r\n";
+
+    return $str;
 }
 
 function convert_to_kml($source_file_path, $output_file) {

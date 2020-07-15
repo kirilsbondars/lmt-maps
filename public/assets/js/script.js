@@ -282,9 +282,27 @@ managerModal.on("click", ".checkboxAll", function () {
 
     if(checkbox.prop("checked")) {
         checkboxes.prop("checked", "checked");
+        checkboxes.each(function (i) {
+            let checkbox = $(this);
+            let id = checkbox.data("id");
+            let name = checkbox.data("name");
+            if(selectedLayers["id"].indexOf(id) < 0) {
+                selectedLayers["id"].push(id);
+                selectedLayers["name"].push(name);
+            }
+        })
     } else {
         checkboxes.prop("checked", false);
+        checkboxes.each(function (i) {
+            if(selectedLayers["id"].indexOf(id) >= 0) {
+                removeItemOnce(selectedLayers["id"], $(this).data("id"));
+                removeItemOnce(selectedLayers["name"], $(this).data("name"));
+            }
+        })
     }
+
+    updateCheckedNumber();
+    console.log(selectedLayers);
 })
 
 // Display in #selectedCheckbox how many layers are selected
@@ -312,7 +330,7 @@ function removeItemOnce(arr, value) {
 }
 
 // Show how many checkboxes are checked
-$(document).on("click","#layersManagerModal input",function(){
+$(document).on("click","#layersManagerModal input[data-about=layer]",function(){
     let checkbox = $(this);
     let id = checkbox.data("id");
     let name = checkbox.data("name");
@@ -326,13 +344,18 @@ $(document).on("click","#layersManagerModal input",function(){
     }
 
     updateCheckedNumber();
+    console.log(selectedLayers);
 })
 
 // Download selected layers
 function deleteLayers() {
     let json = JSON.stringify(selectedLayers["id"]);
 
-    $.post("files/download_files.php", {ids: json}, function (data, status) {
-        console.log(data);
+    $.post("files/combine.php", {ids: json}, function (data, status) {
+        alertify.alert('Download combined layers file', 'File is ready to download: ' + '<a href="files/download_tmp.php?file_name=' + data +'"><em><b>LINK</b></em></a>',
+            function () {
+                console.log("hello");
+                $.get("files/delete_tmp.php?file_name="+data);
+        })
     })
 }
