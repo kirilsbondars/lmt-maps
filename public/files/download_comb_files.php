@@ -1,17 +1,13 @@
 <?php
-include_once("../../src/initialize.php");
+require_once("../../src/initialize.php");
 
-if(!isset($_POST["ids"])) {
+if(!isset($_GET["ids"])) {
     exit("Error: no ID inputted");
 }
-$json = $_POST["ids"];
+$json = $_GET["ids"];
 $ids = json_decode($json);
 
-$new_file_name = generate_unique_filename(TMP);
-$new_file_path = TMP . $new_file_name;
-
-$myfile = fopen($new_file_path, "w") or die("Unable to open file!");
-fwrite($myfile, start_kml_file());
+$combination = start_kml_file();
 foreach ($ids as $id) {
     $layer = Layer::find_by_id($id);
     if($layer == false) {
@@ -19,12 +15,13 @@ foreach ($ids as $id) {
     }
 
     $file = file_get_contents($layer->path) or die("Unable to open file!");
-    fwrite($myfile, "\t\t\t" .substringPlacemarks($file) . "\r\n");
+    $combination .= "\t\t\t" .substringPlacemarks($file) . "\r\n";
 }
-fwrite($myfile, end_kml_file());
-fclose($myfile);
+$combination .= end_kml_file();
 
-echo $new_file_name;
+header("Content-type: application/vnd.google-earth.kmz");
+header("Content-Disposition: attachment; filename=combined.kml");
+echo $combination;
 
 function substringPlacemarks($content) {
     $start_of_placemark =  strpos($content, "<Placemark>");

@@ -294,15 +294,18 @@ managerModal.on("click", ".checkboxAll", function () {
     } else {
         checkboxes.prop("checked", false);
         checkboxes.each(function (i) {
+            let checkbox = $(this);
+            let id = checkbox.data("id");
+            let name = checkbox.data("name");
             if(selectedLayers["id"].indexOf(id) >= 0) {
-                removeItemOnce(selectedLayers["id"], $(this).data("id"));
-                removeItemOnce(selectedLayers["name"], $(this).data("name"));
+                removeItemOnce(selectedLayers["id"], id);
+                removeItemOnce(selectedLayers["name"], name);
             }
         })
     }
 
     updateCheckedNumber();
-    console.log(selectedLayers);
+    updateButtonsStates();
 })
 
 // Display in #selectedCheckbox how many layers are selected
@@ -319,6 +322,15 @@ function updateCheckedNumber() {
     })
 
     output.text(checkedNumber + " layers are checked (" + checkedNames + ")");
+}
+
+function updateButtonsStates() {
+    let checked = managerModal.find("input[data-about=layer]:checked");
+    if(checked.length >= 2) {
+        $("#download").prop("disabled", false);
+    } else {
+        $("#download").prop("disabled", "disabled");
+    }
 }
 
 function removeItemOnce(arr, value) {
@@ -344,18 +356,24 @@ $(document).on("click","#layersManagerModal input[data-about=layer]",function(){
     }
 
     updateCheckedNumber();
-    console.log(selectedLayers);
+    updateButtonsStates();
 })
 
-// Download selected layers
-function deleteLayers() {
-    let json = JSON.stringify(selectedLayers["id"]);
+// Get selected layers data (format for ajax request)
+function getSelectedLayers() {
+    return JSON.stringify(selectedLayers["id"]);
+}
 
-    $.post("files/combine.php", {ids: json}, function (data, status) {
-        alertify.alert('Download combined layers file', 'File is ready to download: ' + '<a href="files/download_tmp.php?file_name=' + data +'"><em><b>LINK</b></em></a>',
-            function () {
-                console.log("hello");
-                $.get("files/delete_tmp.php?file_name="+data);
-        })
+// Download selected layers
+function downloadLayers() {
+    let data = getSelectedLayers();
+    window.location = 'files/download_comb_files.php?ids='+data;
+}
+
+// Delete selected layers
+function deleteLayers() {
+    let data = getSelectedLayers();
+    $.post("layers/delete.php", {ids: data}, function (data, status) {
+
     })
 }

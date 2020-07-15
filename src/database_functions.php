@@ -37,6 +37,7 @@ function create_tables($connection) {
         id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT, 
         name tinytext NOT NULL,
         path tinytext NOT NULL,
-        style JSON NOT NULL)";
+        style JSON NOT NULL,
+        distance INT NOT NULL)";
     return $connection->query($query_layer);
 }

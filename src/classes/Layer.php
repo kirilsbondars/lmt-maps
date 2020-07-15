@@ -5,7 +5,7 @@ class Layer extends DatabaseObject
 {
     // ----- START OF ACTIVE RECORD CODE ------
     protected static string $table_name = "layer";
-    protected static array $db_columns = ['id', 'name', 'path', 'style'];
+    protected static array $db_columns = ['id', 'name', 'path', 'style', 'distance'];
     protected static array $colors = ['#FF6633', '#FF33FF', '#FFFF99', '#00B3E6',
         '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
         '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A',
@@ -17,13 +17,14 @@ class Layer extends DatabaseObject
         '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3',
         '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'];
 
-    public $id, $name, $path, $style, $type;
+    public $id, $name, $path, $style, $type, $distance;
 
     public function __construct($args=[])
     {
         $this->name = $args['name'] ?? '';
         $this->path = $args['path'] ?? '';
         $this->style = $args['style'] ?? self::randomStyle();
+        $this->distance = $args['distance'] ?? 0;
     }
 
     public function type() {

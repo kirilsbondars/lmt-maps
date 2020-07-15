@@ -55,14 +55,8 @@ function random_element_from_array($arr) {
     return $arr[$rand_index];
 }
 
-function error_exit($description) {
-    exit(output(false, $description));
-}
+function getLayerDistance($path) {
+    $layer = geoPHP::load(file_get_contents($path));
 
-function success_output($description) {
-    return output(true, $description);
-}
-
-function output($success, $description) {
-    return json_encode(array("success" => $success, "description" => $description));
+    return $layer->greatCircleLength() / 1000;
 }

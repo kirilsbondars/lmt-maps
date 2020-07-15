@@ -13,9 +13,7 @@ if ($file->type == "txt") {
 $args = [];
 $args["name"] = $file->name;
 $args["path"] = $file->target_file;
-//$args["name"] = "name of file";
-//$args["path"] = "path of file";
-//$args["style"] = '{"juju": "kiki"}';
+$args["distance"] = getLayerDistance($file->target_file);
 
 $layer = new Layer($args);
 $result = $layer->save();
