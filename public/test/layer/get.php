@@ -1,5 +1,5 @@
 <?php
-require_once("../../src/initialize.php");
+require_once("../../../src/initialize.php");
 
 if(!isset($_POST['id'])) {
     exit("Error: no ID inputted");
@@ -11,10 +11,6 @@ if($layer == false) {
     exit("Error: no such ID in DB");
 }
 
-$arr = array();
-$arr["id"] = $layer->id;
-$arr["name"] = $layer->name;
-$arr["style"] = $layer->style;
-$arr["length"] = $layer->distance;
+$arr = $layer->getPublicDataArray();
 
 echo json_encode($arr);

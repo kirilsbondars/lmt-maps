@@ -73,4 +73,14 @@ class Layer extends DatabaseObject
 
         return $this->errors;
     }
+
+    public function getPublicDataArray() {
+        $arr = array();
+        $arr["id"] = $this->id;
+        $arr["name"] = $this->name;
+        $arr["style"] = $this->style;
+        $arr["length"] = $this->distance;
+
+        return $arr;
+    }
 }
