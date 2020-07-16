@@ -18,6 +18,3 @@ DatabaseObject::set_database($database);
 if(!file_exists(DATA)) {
     mkdir(DATA);
 }
-if(!file_exists(TMP)) {
-    mkdir(TMP);
-}

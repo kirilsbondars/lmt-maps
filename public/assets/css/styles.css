@@ -46,56 +46,31 @@
     display: inline-block;
 }
 
-/*Layers manager button*/
-#layersManager {
-    position: absolute;
-    left: 0;
-    bottom: 27px;
-    width: 100%;
-}
-#layersManagerButton {
+/*SETTINGS LAYERS*/
+/*Additional info*/
+#additionalInfo {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #000000;
     width: calc(100% - 20px);
-}
-#menuButton {
-    font-size: 24px;
-    background-color: Transparent;
-    background-repeat: no-repeat;
-    border: none;
-    cursor:pointer;
-    overflow: hidden;
-    outline:none;
     position: absolute;
-    left: calc(50% - 15px);
-    bottom: 0;
+    left: 10px;
+    bottom: 96px;
+    overflow: hidden;
 }
-
 /*Add layer button*/
 #addLayer {
-    position: absolute;
-    left: 0;
-    bottom: 65px;
     width: calc(100% - 20px);
-    margin-left: 10px;
-    margin-right: 10px;
-    margin-bottom: 10px;
-}
-
-/*Button for small/big layers panel*/
-#menuCheckBox {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
+    left: 10px;
+    bottom: 53px;
 }
-#menuCheckBox label {
-    cursor: pointer;
-    margin-bottom: 0;
-}
-#menuCheckBox input {
-    display: none;
-}
-#menuCheckBox i {
-    font-size: 24px;
+/*Layers manager button*/
+#layersManager {
+    width: calc(100% - 20px);
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
 }
 
 /*table*/

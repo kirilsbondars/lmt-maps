@@ -21,15 +21,12 @@ function error($error_message) {
     exit($error_message);
 }
 
-function check_GET_var($var) {
-    if(empty($_GET[$var]))
-        exit("You need to set " . $var . " in ajax request");
+function is_post_request() {
+    return $_SERVER['REQUEST_METHOD'] == 'POST';
 }
 
-function check_POST_request() {
-    if ($_SERVER["REQUEST_METHOD"] != "POST") {
-        exit("This page is only for POST requests");
-    }
+function is_get_request() {
+    return $_SERVER['REQUEST_METHOD'] == 'GET';
 }
 
 function generate_random_string($length = 16, $characters = '0123456789abcdefghijklmnopqrstuvwxyz') {

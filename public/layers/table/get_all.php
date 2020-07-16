@@ -7,11 +7,5 @@ if(empty($layers))
     echo '<p style="text-align: center"><em>No uploaded layers</em></p>';
 
 foreach ($layers as $layer) {
-    $id = $layer->id;
-    $name = $layer->name;
-    $style = json_decode($layer->style, true);
-    $strokeColor = $style["stroke"]["color"];
-    $circleColor = $style["circle"]["fill"]["color"];
-
-    include "table_row.php";
+    include "get_row.php";
 }

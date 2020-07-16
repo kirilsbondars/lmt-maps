@@ -64,6 +64,12 @@ class Layer extends DatabaseObject
         if(is_blank($this->style)) {
             $this->errors[] = "Style cannot be blank";
         }
+        if(is_blank($this->distance)) {
+            $this->errors[] = "Distance cannot be blank";
+        }
+        if(!is_numeric($this->distance)) {
+            $this->errors[] = "Distance need to be a number";
+        }
 
         return $this->errors;
     }

@@ -19,4 +19,4 @@ if ( $file !== false ) {
     fclose($file);
 }
 
-//echo file_get_contents($file_path);
+//echo file_get_contents($layer->path);

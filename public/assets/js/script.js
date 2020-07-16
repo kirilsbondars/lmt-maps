@@ -35,8 +35,12 @@ function mapInitialize() {
 
 // Show/hide layer on checkbox click
 $(document).on('click','.checkboxLayer',function(){
-    let id = $(this).data("id");
-    let checked = $(this).prop("checked");
+    let checkbox = $(this);
+    let id = checkbox.data("id");
+    let distance = checkbox.data("distance");
+    let checked = checkbox.prop("checked");
+
+    console.log(distance);
 
     if (checked) {
         if (layers[id] === undefined) {
@@ -326,7 +330,7 @@ function updateCheckedNumber() {
 
 function updateButtonsStates() {
     let checked = managerModal.find("input[data-about=layer]:checked");
-    if(checked.length >= 2) {
+    if(checked.length >= 1) {
         $("#download").prop("disabled", false);
     } else {
         $("#download").prop("disabled", "disabled");
@@ -367,7 +371,7 @@ function getSelectedLayers() {
 // Download selected layers
 function downloadLayers() {
     let data = getSelectedLayers();
-    window.location = 'files/download_comb_files.php?ids='+data;
+    window.location = 'files/download_files.php?ids='+data;
 }
 
 // Delete selected layers

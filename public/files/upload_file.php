@@ -17,5 +17,9 @@ $args["distance"] = getLayerDistance($file->target_file);
 
 $layer = new Layer($args);
 $result = $layer->save();
-
-echo $layer->id;
+if($result) {
+    echo $layer->id;
+} else {
+    $file->delete();
+    error("Error uploading. Try again.");
+}
