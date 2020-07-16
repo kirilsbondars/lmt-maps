@@ -1,6 +1,6 @@
 <tr id="<?php echo $id?>">
     <td class="first">
-        <input type="checkbox" data-id="<?php echo $id?>" data-distance="<?php echo $distance?>" class="checkboxLayer" title="Check to display layer"/>
+        <input type="checkbox" data-id="<?php echo $id?>" data-length="<?php echo $distance?>" class="checkboxLayer" title="Check to display layer"/>
     </td>
     <td class="second" title="<?php echo $name?>"><?php echo $name?></td>
     <td class="third">

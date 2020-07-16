@@ -30,14 +30,14 @@
     <div id="layers">
         <h5>Choose files to display:</h5>
 
-        <div style="overflow: auto; height: calc(100% - 155px)" >
+        <div style="overflow: auto; height: calc(100% - 120px)" >
             <table class="table table-hover" id="layersTable">
                 <tbody>
                 </tbody>
             </table>
         </div>
 
-        <div id="additionalInfo">Selected layers length: 300 km</div>
+        <div id="additionalInfo">Selected layer(s) length: <span></span> km</div>
 
         <button id="addLayer" class="btn btn-success" data-toggle="modal" data-target="#newLayer">Add layer(s)</button>
         <button id="layersManager" class="btn btn-primary" data-toggle="modal" data-target="#layersManagerModal">Layers manager</button>
@@ -89,7 +89,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button submit" id="layerFormButton" class="btn btn-primary" form="layerForm">Save</button>
+                    <button class="btn btn-primary" form="layerForm" id="layerFormButton" type="submit">Save</button>
                 </div>
             </div>
         </div>
@@ -107,11 +107,9 @@
                 </div>
                 <div class="modal-body">
                     <form action="files/upload_file.php" class="dropzone m-2" id="fileUploadKML"></form>
-<!--                    <form action="layers/upload_file.php" class="dropzone m-2" id="fileUploadTXT"></form>-->
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-<!--                    <button type="button" class="btn btn-primary">Save changes</button>-->
                 </div>
             </div>
         </div>
@@ -148,8 +146,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="download"class="btn btn-success" onclick="downloadLayers()" disabled>Download as one file</button>
-                    <button type="button" id="delete" class="btn btn-danger" onclick="deleteLayers()" disabled>Delete</button>
+                    <button type="button" id="download" class="btn btn-success" onclick="downloadLayers()" disabled>Download as one file</button>
+                    <button type="button" id="delete" class="btn btn-danger" title="In the next version" onclick="deleteLayers()" disabled>Delete</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>

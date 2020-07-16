@@ -34,6 +34,7 @@ if(count($ids) >= 2) {
     exit("Input contains no layers");
 }
 
+// Functions
 function substringPlacemarks($content) {
     $start_of_placemark =  strpos($content, "<Placemark>");
     $end_of_placemark =  strripos($content, "</Placemark>") + strlen("</Placemark>");

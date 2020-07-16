@@ -11,12 +11,12 @@ if($layer == false) {
     exit("Error: no such ID in DB");
 }
 
-$file = fopen($layer->path, 'rb');
-if ( $file !== false ) {
-    while ( !feof($file) ) {
-        echo fread($file, 4096);
-    }
-    fclose($file);
-}
+//$file = fopen($layer->path, 'rb');
+//if ( $file !== false ) {
+//    while ( !feof($file) ) {
+//        echo fread($file, 4096);
+//    }
+//    fclose($file);
+//}
 
-//echo file_get_contents($layer->path);
+echo file_get_contents($layer->path);

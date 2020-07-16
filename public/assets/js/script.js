@@ -10,6 +10,7 @@ var layers = [], map;
 $(window).on('load', function() {
     map = mapInitialize();
     updateLayersTable();
+    updateSelectedLayersLength();
 });
 
 // Initialize map
@@ -37,10 +38,7 @@ function mapInitialize() {
 $(document).on('click','.checkboxLayer',function(){
     let checkbox = $(this);
     let id = checkbox.data("id");
-    let distance = checkbox.data("distance");
     let checked = checkbox.prop("checked");
-
-    console.log(distance);
 
     if (checked) {
         if (layers[id] === undefined) {
@@ -62,7 +60,23 @@ $(document).on('click','.checkboxLayer',function(){
         map.removeLayer(layers[id]);
         console.log("Deleted layer with id = " + id + " to the map" + checked);
     }
+
+    updateSelectedLayersLength();
 })
+
+// Updates data about length of selected layers in layers panel
+function updateSelectedLayersLength() {
+    let sumLength = 0;
+
+    $(".checkboxLayer:checked").each(function () {
+        sumLength += parseFloat($(this).data("length"));
+    })
+
+    sumLength = Math.round(sumLength * 1000) / 1000;
+
+    $("#additionalInfo span").html(sumLength);
+}
+
 
 // Get style from db and display layer
 function displayLayer(id) {
@@ -81,10 +95,6 @@ function updateStyle(id) {
 }
 
 //// EDIT MODAL
-// Clear form on close
-$('#editModal').on('hide.bs.modal', function (event) {
-    //clearFormInputs();
-})
 // Edit button action
 $('#editModal').on('show.bs.modal', function (event) {
     let modal = $(this);
@@ -163,7 +173,7 @@ $("#layerForm").submit(function (event) {
     };
 
     $.post("layers/change.php?id="+id, {layer: input}, function (data, status) {
-        if(data == true) {
+        if(data === "1") {
             console.log("Info about layer with id = " + id + " has been changed");
             $("#editModal").modal("hide");
 
@@ -190,13 +200,13 @@ $(document).on("click", ".delete", function () {
 
     alertify.confirm('Confirm delete', 'Do you want to delete layer <b><em>"' + name + '"</em></b> (id=' + id +')' + '?',
         function(){
-            $.get('layers/delete.php?id=' + id, function (data, status) {
-                if(data == true) {
+            $.post('layers/delete.php', {ids: "["+id+"]"}, function (data, status) {
+                if(data === "1") {
                     console.log("Layer with id = " + id + " has been deleted");
                     alertify.success('<b><em>' + name + '</em></b> (id=' + id + ') has been deleted', 3);
                     $(layer).parents("tr").addClass("table-danger").hide(500);
 
-                    if($("#layersTable tbody").find("tr").length == 1) {
+                    if($("#layersTable tbody").find("tr").length === 1) {
                         setTimeout(function () {
                             updateLayersTable();
                         }, 500)
@@ -281,12 +291,12 @@ managerModal.on('show.bs.modal', function (event) {
 
 // Collective select
 managerModal.on("click", ".checkboxAll", function () {
-    let checkbox = $(this);
+    let checked = $(this);
     let checkboxes = managerModal.find("input[data-about=layer]");
 
-    if(checkbox.prop("checked")) {
+    if(checked.prop("checked")) {
         checkboxes.prop("checked", "checked");
-        checkboxes.each(function (i) {
+        checkboxes.each(function () {
             let checkbox = $(this);
             let id = checkbox.data("id");
             let name = checkbox.data("name");
@@ -297,7 +307,7 @@ managerModal.on("click", ".checkboxAll", function () {
         })
     } else {
         checkboxes.prop("checked", false);
-        checkboxes.each(function (i) {
+        checkboxes.each(function () {
             let checkbox = $(this);
             let id = checkbox.data("id");
             let name = checkbox.data("name");
@@ -330,10 +340,14 @@ function updateCheckedNumber() {
 
 function updateButtonsStates() {
     let checked = managerModal.find("input[data-about=layer]:checked");
+    let downloadButton = $("#download");
+    //let deleteButton = $("#delete");
     if(checked.length >= 1) {
-        $("#download").prop("disabled", false);
+        downloadButton.prop("disabled", false);
+        //deleteButton.prop("disabled", false);
     } else {
-        $("#download").prop("disabled", "disabled");
+        downloadButton.prop("disabled", "disabled");
+        //deleteButton.prop("disabled", "disabled");
     }
 }
 
@@ -372,12 +386,4 @@ function getSelectedLayers() {
 function downloadLayers() {
     let data = getSelectedLayers();
     window.location = 'files/download_files.php?ids='+data;
-}
-
-// Delete selected layers
-function deleteLayers() {
-    let data = getSelectedLayers();
-    $.post("layers/delete.php", {ids: data}, function (data, status) {
-
-    })
 }

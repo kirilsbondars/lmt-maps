@@ -55,21 +55,21 @@
     width: calc(100% - 20px);
     position: absolute;
     left: 10px;
-    bottom: 96px;
+    bottom: 53px;
     overflow: hidden;
 }
 /*Add layer button*/
 #addLayer {
-    width: calc(100% - 20px);
+    width: calc(50% - 20px);
     position: absolute;
     left: 10px;
-    bottom: 53px;
+    bottom: 10px;
 }
 /*Layers manager button*/
 #layersManager {
-    width: calc(100% - 20px);
+    width: calc(50% - 10px);
     position: absolute;
-    left: 10px;
+    right: 10px;
     bottom: 10px;
 }
 
