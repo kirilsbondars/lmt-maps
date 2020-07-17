@@ -32,12 +32,24 @@ function create_db($connection) {
 }
 
 function create_tables($connection) {
-    $query_layer =
-        "CREATE TABLE IF NOT EXISTS layer(
-        id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT, 
-        name tinytext NOT NULL,
-        path tinytext NOT NULL,
-        style JSON NOT NULL,
-        distance DECIMAL(10, 3) NOT NULL)";
-    return $connection->query($query_layer);
+    $query_categories = "CREATE TABLE IF NOT EXISTS categories(";
+    $query_categories .= "id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,";
+    $query_categories .= "name tinytext NOT NULL)";
+    $result_categories = $connection->query($query_categories);
+
+    $query_input = "INSERT INTO categories (id, name) VALUES (";
+    $query_input .= "'1', 'no category')";
+    $result_input = $connection->query($query_input);
+
+    $query_layers = "CREATE TABLE IF NOT EXISTS layers(";
+    $query_layers .= "id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,";
+    $query_layers .= "name tinytext NOT NULL,";
+    $query_layers .= "path tinytext NOT NULL,";
+    $query_layers .= "style JSON NOT NULL,";
+    $query_layers .= "distance DECIMAL(10, 3) NOT NULL,";
+    $query_layers .= "category INT NOT NULL,";
+    $query_layers .= "FOREIGN KEY (category) REFERENCES categories(id))";
+    $result_layers = $connection->query($query_layers);
+
+    return $result_categories && $result_input && $result_layers;
 }

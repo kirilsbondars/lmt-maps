@@ -3,9 +3,8 @@
 
 class Layer extends DatabaseObject
 {
-    // ----- START OF ACTIVE RECORD CODE ------
-    protected static string $table_name = "layer";
-    protected static array $db_columns = ['id', 'name', 'path', 'style', 'distance'];
+    protected static string $table_name = "layers";
+    protected static array $db_columns = ['id', 'name', 'path', 'style', 'distance', 'category'];
     protected static array $colors = ['#FF6633', '#FF33FF', '#FFFF99', '#00B3E6',
         '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
         '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A',
@@ -17,7 +16,7 @@ class Layer extends DatabaseObject
         '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3',
         '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'];
 
-    public $id, $name, $path, $style, $type, $distance;
+    public $id, $name, $path, $style, $type, $distance, $category;
 
     public function __construct($args=[])
     {
@@ -25,6 +24,7 @@ class Layer extends DatabaseObject
         $this->path = $args['path'] ?? '';
         $this->style = $args['style'] ?? self::randomStyle();
         $this->distance = $args['distance'] ?? 0;
+        $this->category = $args["category"] ?? 1;
     }
 
     public function type() {
@@ -33,10 +33,6 @@ class Layer extends DatabaseObject
 
     public function full_name() {
         return $this->name . "." . $this->type();
-    }
-
-    public function uniqueRandomStyle() {
-
     }
 
     public function randomStyle() {
@@ -67,7 +63,7 @@ class Layer extends DatabaseObject
         if(is_blank($this->distance)) {
             $this->errors[] = "Distance cannot be blank";
         }
-        if(!is_numeric($this->distance)) {
+        if(!is_numeric($this->category)) {
             $this->errors[] = "Distance need to be a number";
         }
 
@@ -80,6 +76,7 @@ class Layer extends DatabaseObject
         $arr["name"] = $this->name;
         $arr["style"] = $this->style;
         $arr["length"] = $this->distance;
+        $arr["category"] = $this->category;
 
         return $arr;
     }

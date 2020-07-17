@@ -18,28 +18,68 @@ function getPanelTableRow(layer) {
     row += '<td class="second" title="' + name +'">' + name + '</td>';
     row += '<td class="third">';
     row += '<div style="display: table; border-spacing: 3px; border-collapse: separate;">';
-    row += '<div class="stroke" style="width: 7px; height: 18px; background-color: ' +  +'; display: table-cell; cursor: pointer" title="Color of stroke"></div>';
-    row += '<div class="circle" style="width: 18px; height: 18px; background-color: <?php echo $circleColor?>; border-radius: 18px; display: table-cell; cursor: pointer" title="Color of point"></div>';
+    row += '<div class="stroke" style="width: 7px; height: 18px; background-color: ' + style["stroke"]["color"] +'; display: table-cell; cursor: pointer" title="Color of stroke"></div>';
+    row += '<div class="circle" style="width: 18px; height: 18px; background-color: ' + style["circle"]["fill"]["color"] +'; border-radius: 18px; display: table-cell; cursor: pointer" title="Color of point"></div>';
     row += '</div>';
     row += '</td>';
-    row +='<td class="forth">';
+    row += '<td class="forth">';
     row += '<div class="btn-group" role="group">';
-    row += '<button class="btn btn-secondary actions edit" data-toggle="modal" data-target="#editModal" data-id="<?php echo $id?>" title="Edit layer"><i class="fa fa-edit" aria-hidden="true"></i></button>';
-    row += '<a href="files/download_files.php?ids=[<?php echo $id?>]" class="btn btn-secondary actions download" title="Download layer" role="button" aria-pressed="true"><i class="fa fa-download" aria-hidden="true"></i></a>';
-    row += '<button class="btn btn-secondary actions delete" data-id="<?php echo $id?>" data-name="<?php echo $name?>" title="Delete layer"><i class="fa fa-times" aria-hidden="true"></i></button>';
+    row += '<button class="btn btn-secondary actions edit" data-toggle="modal" data-target="#editModal" data-id="' + id + '" title="Edit layer"><i class="fa fa-edit" aria-hidden="true"></i></button>';
+    row += '<a href="files/download_files.php?ids=[' + id +']" class="btn btn-secondary actions download" title="Download layer" role="button" aria-pressed="true"><i class="fa fa-download" aria-hidden="true"></i></a>';
+    row += '<button class="btn btn-secondary actions delete" data-id="' + id + '" data-name="' + id + '" title="Delete layer"><i class="fa fa-times" aria-hidden="true"></i></button>';
     row += '</div>';
-    row +='</td>';
+    row += '</td>';
     row += '</tr>';
+
+    return row;
 }
 
-function getPanelTable() {
+// VARIABLE
+let panelTable = $("#layersTable");
+let panelTableTbody = panelTable.find("tbody")
 
-}
-
-// functions
+// FUNCTIONS
 $(window).on('load', function() {
-    $.post("test/layer/get_all.php", function (json) {
-        let data = JSON.parse(json);
-        console.log(data);
-    })
+    updatePanelTable();
 });
+
+function updatePanelTable() {
+    $.post("test/layer/get_all.php", function (json) {
+        console.log(json);
+        let layers = JSON.parse(json);
+
+        layers.forEach(function (item, index) {
+            let row = getPanelTableRow(item);
+            panelTableTbody.append(row);
+        })
+    })
+}
+
+// FILE UPLOAD
+// DropZone KML files settings
+Dropzone.options.fileUploadKML = {
+    url: "test/file/upload.php",
+    paramName: "fileToUpload",
+    Filesize: 200,
+    acceptedFiles:".kml, .txt",
+    parallelUploads: 1,
+    dictDefaultMessage: "Drop layer(s) in KML or TXT(custom lmt format) here to upload",
+    timeout: 99999,
+    init: function(){
+        let myDropzone = this;
+
+        myDropzone.on("sending", function (file, xhr, formData) {
+            formData.append("category", 1);
+        })
+
+        myDropzone.on("success", function (file, response) {
+            myDropzone.removeFile(file);
+            alertify.success("File has been uploaded, id = " + response);
+            console.log("File has been uploaded, id = " + response);
+        })
+
+        myDropzone.on("error", function (file, response) {
+            console.log(response);
+        })
+    },
+};

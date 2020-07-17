@@ -8,6 +8,7 @@ require_once(SRC . "libs/phayes-geoPHP/geoPHP.inc");
 require_once(SRC . "libs/txt_to_kml.php");
 require_once(SRC . "database_functions.php");
 require_once(SRC . "validation_functions.php");
+require_once SRC . "classes/DatabaseObject.php";
 foreach (glob(SRC . "classes/*.php") as $filename) {
     require_once($filename);
 }
@@ -18,3 +19,9 @@ DatabaseObject::set_database($database);
 if(!file_exists(DATA)) {
     mkdir(DATA);
 }
+
+//$files = scandir(DATA);
+//foreach ($files as $file) {
+//    echo $file . " ";
+//    echo is_dir(DATA . $file) . "|";
+//}

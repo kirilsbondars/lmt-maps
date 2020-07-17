@@ -249,6 +249,7 @@ function getLayerRow(id) {
 
 // DropZone KML files settings
 Dropzone.options.fileUploadKML = {
+    url: "test/file/upload.php",
     paramName: "fileToUpload",
     Filesize: 200,
     acceptedFiles:".kml, .txt",
