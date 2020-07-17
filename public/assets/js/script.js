@@ -247,6 +247,18 @@ function getLayerRow(id) {
     })
 }
 
+function getCheckedLayers() {
+    return
+}
+// Show only selected layers
+$("#onlySelected").on("change", function () {
+    let checkbox = $(this);
+    let checked = checkbox.prop("checked");
+    if(checked) {
+
+    }
+})
+
 // DropZone KML files settings
 Dropzone.options.fileUploadKML = {
     paramName: "fileToUpload",

@@ -30,6 +30,10 @@
     padding-left: 10px;
     padding-right: 10px;
 }
+#search {
+    height: 30px;
+    margin-bottom: 10px;
+}
 #choice_layers {
     max-height: calc(100% - 110px);
     width: 100%;
@@ -47,6 +51,13 @@
 }
 
 /*SETTINGS LAYERS*/
+/*Show only selected layers*/
+#onlySelectedDiv {
+    position: absolute;
+    left: 10px;
+    bottom: 84px;
+    text-align: left;
+}
 /*Additional info*/
 #additionalInfo {
     border-style: solid;
