@@ -292,7 +292,7 @@ Dropzone.options.fileUploadKML = {
     paramName: "fileToUpload",
     Filesize: 200,
     acceptedFiles:".kml, .txt",
-    parallelUploads: 1,
+    parallelUploads: 2,
     dictDefaultMessage: "Drop layer(s) in KML or TXT(custom lmt format) here to upload",
     timeout: 99999,
     init: function(){
