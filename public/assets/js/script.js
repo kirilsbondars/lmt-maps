@@ -8,6 +8,7 @@ var layers = [], map;
 
 // Variables of elements
 let table = $("#layersTable tbody");
+let search = $("#search");
 
 // Actions after page is load
 $(window).on('load', function() {
@@ -87,6 +88,12 @@ function updateSelectedLayersLength() {
 }
 
 // Search layers
+$("#search").on("keyup", function () {
+    let value = $(this).val().toLowerCase();
+    $("#layersTable tr").filter(function () {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    })
+})
 
 // Update style
 function updateStyle(id) {
@@ -213,6 +220,8 @@ $(document).on("click", ".delete", function () {
 
                     setTimeout(function () {
                         layer.remove();
+                        if(table.find("tr").length === 0)
+                            updateLayersTable();
                         updateSelectedLayersLength();
                     }, 500);
 
@@ -231,13 +240,13 @@ function updateLayersTable() {
 
     $.get(url, function (data) {
         $("#layersTable tbody").html(data);
-        console.log("Layers table has been updated");
+        console.log("Panel table has been updated");
     });
 }
 
 //Get layer in row for table
 function getLayerRow(id) {
-    if(table.find("tr").length === 0) {
+    if(table.find("#0").length === 1) {
         table.html("");
     }
 
@@ -256,19 +265,23 @@ $("#onlySelected").on("change", function () {
     let checked = checkbox.prop("checked");
     let selected = table.find("input[type=checkbox]");
     if(checked) {
+        search.prop("disabled", "disabled");
+
         selected.each(function () {
             let checkbox = $(this);
             let layer = checkbox.parents("tr");
             if(!checkbox.prop("checked")) {
-                layer.hide(500);
+                layer.toggle();
             }
         })
     } else {
+        search.prop("disabled", false);
+
         selected.each(function () {
             let checkbox = $(this);
             let layer = checkbox.parents("tr");
             if(!checkbox.prop("checked")) {
-                layer.show(500);
+                layer.toggle();
             }
         })
     }
