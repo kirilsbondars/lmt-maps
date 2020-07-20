@@ -6,15 +6,18 @@ alertify.defaults.theme.input = "form-control";
 
 var layers = [], map;
 
+// Variables of elements
+let table = $("#layersTable tbody");
+
 // Actions after page is load
 $(window).on('load', function() {
-    map = mapInitialize();
+    map = initializeMap();
     updateLayersTable();
     updateSelectedLayersLength();
 });
 
-// Initialize map
-function mapInitialize() {
+//// MAP
+function initializeMap() {
     let layer_map = new ol.layer.Tile({
         source: new ol.source.OSM()
     });
@@ -34,6 +37,18 @@ function mapInitialize() {
     return map;
 }
 
+function getVector(url) {
+    return new ol.layer.Vector({
+        source: new ol.source.Vector({
+            url: url,
+            format: new ol.format.KML({
+                extractStyles: false
+            })
+        })
+    })
+}
+
+//// LAYER PANEL
 // Show/hide layer on checkbox click
 $(document).on('click','.checkboxLayer',function(){
     let checkbox = $(this);
@@ -42,20 +57,14 @@ $(document).on('click','.checkboxLayer',function(){
 
     if (checked) {
         if (layers[id] === undefined) {
-            layers[id] = new ol.layer.Vector({
-                source: new ol.source.Vector({
-                    url: './layers/get_layer.php?id=' + id,
-                    format: new ol.format.KML({
-                        extractStyles: false
-                    })
-                })
-            })
+            layers[id] = getVector('./layers/get_layer.php?id=' + id);
             layers[id].set("id", id);
             console.log("Layer with id " + id + " added to the array")
         }
 
-        displayLayer(id);
-
+        updateStyle(id);
+        map.addLayer(layers[id]);
+        console.log("Added layer with id = " + id + " to the map");
     } else {
         map.removeLayer(layers[id]);
         console.log("Deleted layer with id = " + id + " to the map" + checked);
@@ -77,13 +86,8 @@ function updateSelectedLayersLength() {
     $("#additionalInfo span").html(sumLength);
 }
 
+// Search layers
 
-// Get style from db and display layer
-function displayLayer(id) {
-    updateStyle(id);
-    map.addLayer(layers[id]);
-    console.log("Added layer with id = " + id + " to the map");
-}
 // Update style
 function updateStyle(id) {
     let url = "layers/get_style.php";
@@ -194,9 +198,10 @@ $("#layerForm").submit(function (event) {
 
 // Delete button action
 $(document).on("click", ".delete", function () {
-    let layer = $(this);
-    let id = layer.data("id");
-    let name = layer.data("name");
+    let button = $(this);
+    let id = button.data("id");
+    let name = button.data("name");
+    let layer = button.parents("tr");
 
     alertify.confirm('Confirm delete', 'Do you want to delete layer <b><em>"' + name + '"</em></b> (id=' + id +')' + '?',
         function(){
@@ -204,13 +209,12 @@ $(document).on("click", ".delete", function () {
                 if(data === "1") {
                     console.log("Layer with id = " + id + " has been deleted");
                     alertify.success('<b><em>' + name + '</em></b> (id=' + id + ') has been deleted', 3);
-                    $(layer).parents("tr").addClass("table-danger").hide(500);
+                    layer.addClass("table-danger").hide(500);
 
-                    if($("#layersTable tbody").find("tr").length === 1) {
-                        setTimeout(function () {
-                            updateLayersTable();
-                        }, 500)
-                    }
+                    setTimeout(function () {
+                        layer.remove();
+                        updateSelectedLayersLength();
+                    }, 500);
 
                     map.removeLayer(layers[id]);
                 } else {
@@ -233,12 +237,11 @@ function updateLayersTable() {
 
 //Get layer in row for table
 function getLayerRow(id) {
-    $.get("layers/table/get_row.php?id="+id, function (data, status) {
-        let table = $("#layersTable tbody");
-        if(table.find("tr").length === 0) {
-            table.html("");
-        }
+    if(table.find("tr").length === 0) {
+        table.html("");
+    }
 
+    $.get("layers/table/get_row.php?id="+id, function (data, status) {
         let row = $(data);
         row.hide().addClass("table-success").show(1000)
         setTimeout(function() { row.removeClass("table-success") }, 2000 );
@@ -247,15 +250,27 @@ function getLayerRow(id) {
     })
 }
 
-function getCheckedLayers() {
-    return
-}
 // Show only selected layers
 $("#onlySelected").on("change", function () {
     let checkbox = $(this);
     let checked = checkbox.prop("checked");
+    let selected = table.find("input[type=checkbox]");
     if(checked) {
-
+        selected.each(function () {
+            let checkbox = $(this);
+            let layer = checkbox.parents("tr");
+            if(!checkbox.prop("checked")) {
+                layer.hide(500);
+            }
+        })
+    } else {
+        selected.each(function () {
+            let checkbox = $(this);
+            let layer = checkbox.parents("tr");
+            if(!checkbox.prop("checked")) {
+                layer.show(500);
+            }
+        })
     }
 })
 
