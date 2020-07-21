@@ -12,7 +12,7 @@
     <td class="forth">
         <div class="btn-group" role="group">
             <button class="btn btn-secondary actions edit" data-toggle="modal" data-target="#editModal" data-id="<?php echo $id?>" title="Edit layer"><i class="fa fa-edit" aria-hidden="true"></i></button>
-            <a href="files/download_files.php?ids=[<?php echo $id?>]" class="btn btn-secondary actions download" title="Download layer" role="button" aria-pressed="true"><i class="fa fa-download" aria-hidden="true"></i></a>
+            <a href="layers/download.php?ids=[<?php echo $id?>]" class="btn btn-secondary actions download" title="Download layer" role="button" aria-pressed="true"><i class="fa fa-download" aria-hidden="true"></i></a>
             <button class="btn btn-secondary actions delete" data-id="<?php echo $id?>" data-name="<?php echo $name?>" title="Delete layer"><i class="fa fa-times" aria-hidden="true"></i></button>
         </div>
     </td>

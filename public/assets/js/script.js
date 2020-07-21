@@ -58,7 +58,7 @@ $(document).on('click','.checkboxLayer',function(){
 
     if (checked) {
         if (layers[id] === undefined) {
-            layers[id] = getVector('./layers/get_layer.php?id=' + id);
+            layers[id] = getVector('./layers/download.php?ids=[' + id + ']');
             layers[id].set("id", id);
             console.log("Layer with id " + id + " added to the array")
         }
@@ -289,6 +289,7 @@ $("#onlySelected").on("change", function () {
 
 // DropZone KML files settings
 Dropzone.options.fileUploadKML = {
+    url: "layers/upload.php",
     paramName: "fileToUpload",
     Filesize: 200,
     acceptedFiles:".kml, .txt",
@@ -425,5 +426,5 @@ function getSelectedLayers() {
 // Download selected layers
 function downloadLayers() {
     let data = getSelectedLayers();
-    window.location = 'files/download_files.php?ids='+data;
+    window.location = 'layers/download.php?ids='+data;
 }

@@ -1,7 +1,9 @@
 <?php
 require_once("../../src/initialize.php");
 
-//$xy = get_XY_array("C:/Users/espero-win10/Documents/MEGA/data/kml/PLS1.kml");
+function get_kml_file_distance($path) {
+    $length = 0;
+    $xy = get_XY_array($path);
 
 echo vincentyGreatCircleDistance(56.958327, 24.254890, 56.938968, 24.091208);
 
