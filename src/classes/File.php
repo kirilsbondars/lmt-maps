@@ -53,4 +53,8 @@ class File
         $this->target_file = $new_path;
         $this->type = "kml";
     }
+
+    public function getFileName() {
+        return basename($this->target_file, PATHINFO_FILENAME);
+    }
 }

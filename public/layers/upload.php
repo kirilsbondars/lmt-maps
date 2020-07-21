@@ -12,7 +12,8 @@ if ($file->type == "txt") {
 
 $args = [];
 $args["name"] = $file->name;
-$args["path"] = $file->target_file;
+$args["path"] = $file->getFileName();
+//$args["distance"] = getLayerDistance($file->target_file);
 $args["distance"] = get_kml_file_distance($file->target_file);
 
 $layer = new Layer($args);

@@ -58,7 +58,7 @@ $(document).on('click','.checkboxLayer',function(){
 
     if (checked) {
         if (layers[id] === undefined) {
-            layers[id] = getVector('./layers/download.php?ids=[' + id + ']');
+            layers[id] = getVector('./layers/download.php?id=' + id);
             layers[id].set("id", id);
             console.log("Layer with id " + id + " added to the array")
         }
@@ -313,6 +313,7 @@ Dropzone.options.fileUploadKML = {
 
 //// LAYERS MANAGER
 let managerModal = $('#layersManagerModal');
+let managerTableTbody = $('#layersManagerTable tbody');
 let output = $("#selectedCheckboxes");
 let selectedLayers = {"id": [], "name" : []};
 
@@ -382,13 +383,13 @@ function updateCheckedNumber() {
 function updateButtonsStates() {
     let checked = managerModal.find("input[data-about=layer]:checked");
     let downloadButton = $("#download");
-    //let deleteButton = $("#delete");
+    let deleteButton = $("#delete");
     if(checked.length >= 1) {
         downloadButton.prop("disabled", false);
-        //deleteButton.prop("disabled", false);
+        deleteButton.prop("disabled", false);
     } else {
         downloadButton.prop("disabled", "disabled");
-        //deleteButton.prop("disabled", "disabled");
+        deleteButton.prop("disabled", "disabled");
     }
 }
 
@@ -419,12 +420,31 @@ $(document).on("click","#layersManagerModal input[data-about=layer]",function(){
 })
 
 // Get selected layers data (format for ajax request)
-function getSelectedLayers() {
+function getSelectedLayersJSON() {
     return JSON.stringify(selectedLayers["id"]);
 }
 
 // Download selected layers
 function downloadLayers() {
-    let data = getSelectedLayers();
-    window.location = 'layers/download.php?ids='+data;
+    let selectedLayersNum = selectedLayers["id"].length;
+
+    if(selectedLayersNum === 1) {
+        window.location = 'layers/download.php?id=' + selectedLayers["id"][0];
+    } else if (selectedLayersNum >= 2) {
+        window.location = 'layers/download_multiple.php?ids=' + getSelectedLayersJSON();
+    }
+
+}
+
+// Delete selected layers
+function deleteLayers() {
+    let input = getSelectedLayersJSON();
+    $.post("layers/delete.php", {ids: input}, function (data, status) {
+        if(data === "1") {
+            alertify.success("Layer(s) has/have been successfully deleted");
+            selectedLayers["id"].forEach(function (item) {
+                managerTableTbody.find('input:[data-id="' + item + '"]').parents("tr").remove();
+            });
+        }
+    })
 }

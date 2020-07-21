@@ -2,11 +2,18 @@
 
 function get_kml_file_distance($path) {
     $length = 0;
-    $xy = get_XY_array($path);
+    $xy_str_arr = get_XY_array_str($path);
+    $xy_arr = array();
 
-    for ($i = 0; $i < count($xy); $i++) {
-        for ($k = 1; $k < count($xy[$i]["x"]); $k++) {
-            $length += haversineGreatCircleDistance($xy[$i]["x"][$k-1], $xy[$i]["y"][$k-1], $xy[$i]["x"][$k], $xy[$i]["y"][$k]);
+    for ($i = 0; $i < count($xy_str_arr); $i++) {
+        $xy_str = $xy_str_arr[$i];
+        if(!empty($xy_str))
+            array_push($xy_arr, get_coordinates($xy_str));
+    }
+
+    for ($i = 0; $i < count($xy_arr); $i++) {
+        for ($k = 1; $k < count($xy_arr[$i]["x"]); $k++) {
+            $length += haversineGreatCircleDistance($xy_arr[$i]["x"][$k-1], $xy_arr[$i]["y"][$k-1], $xy_arr[$i]["x"][$k], $xy_arr[$i]["y"][$k]);
         }
     }
 
@@ -29,7 +36,6 @@ function vincentyGreatCircleDistance($latitudeFrom, $longitudeFrom, $latitudeTo,
 }
 
 function haversineGreatCircleDistance($latitudeFrom, $longitudeFrom, $latitudeTo, $longitudeTo, $earthRadius = 6371000) {
-    // convert from degrees to radians
     $latFrom = deg2rad($latitudeFrom);
     $lonFrom = deg2rad($longitudeFrom);
     $latTo = deg2rad($latitudeTo);
@@ -43,7 +49,7 @@ function haversineGreatCircleDistance($latitudeFrom, $longitudeFrom, $latitudeTo
     return $angle * $earthRadius;
 }
 
-function get_XY_array($path) {
+function get_XY_array_str($path) {
     $file_coor = fopen($path, "r") or die("Unable to open file!");
     $line = "";
     $start_placemark = false;
@@ -52,7 +58,7 @@ function get_XY_array($path) {
     $end_coordinates = false;
 
     $coordinates_str = "";
-    $coordinates_arr = array();
+    $coordinates_arr_str = array();
 
     while(!feof($file_coor)) {
         $line = fgets($file_coor);
@@ -70,7 +76,7 @@ function get_XY_array($path) {
             $end_coordinates = strpos($line, "</coordinates>");
             $start_coordinates = $start_coordinates + strlen("<coordinates>");
             $coordinates_str = substr($line, $start_coordinates, $end_coordinates - $start_coordinates);
-            array_push($coordinates_arr, getCoordinates($coordinates_str));
+            array_push($coordinates_arr_str, $coordinates_str);
 
             $start_coordinates = false;
             $start_linestring = false;
@@ -79,10 +85,10 @@ function get_XY_array($path) {
     }
     fclose($file_coor);
 
-    return $coordinates_arr;
+    return $coordinates_arr_str;
 }
 
-function getCoordinates($str) {
+function get_coordinates($str) {
     $x_arr = array();
     $y_arr = array();
 
